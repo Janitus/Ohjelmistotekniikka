@@ -1,0 +1,36 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Level1.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Level1.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 392.66666666666663,
+                "y": 153.99999999999997
+            }
+        },
+        "tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "D:/Jani/Opis/Ohjelmistotekniikka/Ohjelmistotekniikka/todoapp/assets/images",
+    "map.height": 30,
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "tileset.tsx",
+        "Level1.tmx"
+    ],
+    "project": "testLevel.tiled-project",
+    "recentFiles": [
+        "tileset.tsx",
+        "Level1.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}

@@ -2,3 +2,6 @@
 __pycache__
 .coverage
 htmlcov
+*.psp
+*.tiled-project
+*.tsx
