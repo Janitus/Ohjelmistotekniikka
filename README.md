@@ -1,9 +1,7 @@
 # Ohjelmistotekniikka Harjoitustyö
 
-Varmaankin jotain peliä ajattelin väsäillä. Täytyy kyllä vähän katsoa mitä kaikkea pythonilla saisi aikaiseksi juutuupista.
+Työaikakirjaus: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/tyoaikakirjanpito.txt
+Vaatimusmäärittelyt: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/vaatimusmaarittely.md
+Tulevia dokumentteja: ...
 
-Vaihtoehdot jotka tulisi mieleen ensimmäisenä pienprojektista:
-- Mariotyylinen platformeri muutamilla kentillä
-- Bullet hell
-- Joku puzzlepeli
-- Tower tai herodefense
+Projektina pienimuotoinen aarreplatformeri. Katsotaan kuinka pitkälle kerkeää viemään.
