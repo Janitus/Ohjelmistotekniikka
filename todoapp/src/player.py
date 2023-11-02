@@ -2,17 +2,15 @@ import pygame
 from character import Character
 
 class Player(Character):
-    def __init__(self, image, pos):
-        super().__init__(image, pos)
-        # Add any player-specific initialization here
+    def __init__(self, image, pos, width, height):
+        super().__init__(image, pos, width, height)
 
     def update(self, keys):
-        super().update()  # Call the base class update
-        # Player-specific update logic
+        super().update()
         if keys[pygame.K_w]:
-            self.move(0, -self.speed)
+            self.moveUpwards()
         if keys[pygame.K_s]:
-            self.move(0, self.speed)
+            self.moveDownwards()
         if keys[pygame.K_a]:
             self.move(-self.speed, 0)
         if keys[pygame.K_d]:

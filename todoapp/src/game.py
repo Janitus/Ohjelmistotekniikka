@@ -2,6 +2,7 @@ import pygame
 import pytmx
 from pytmx.util_pygame import load_pygame
 from player import Player
+import map
 
 pygame.init()
 pygame.display.set_caption ("Placeholder Name")
@@ -45,6 +46,8 @@ tmx_level = load_pygame("./assets/campaigns/testCampaign/Level1.tmx")
 camera_pos = [100,100]
 # movement_speed = 3
 
+
+
 #collision_area = pygame.rect(0, 0, 300, 50)
 
 
@@ -62,8 +65,14 @@ def handle_rendering(player):
     draw_map(game_surface, tmx_level, camera_pos)
     player.draw(game_surface, camera_pos)
 
-    scaled_surface = pygame.transform.scale(game_surface, zoomed_resolution) #scaled_surface = pygame.transform.scale(game_surface, monitor_resolution)
-    game_window.blit(scaled_surface, (0, 0))
+    offset_x = (player.rect.centerx - camera_pos[0]) * zoom_amount - game_resolution[0] // 2
+    offset_y = (player.rect.centery - camera_pos[1]) * zoom_amount - game_resolution[1] // 2
+
+    scaled_surface = pygame.transform.scale(game_surface, zoomed_resolution)
+    game_window.blit(scaled_surface, (-offset_x, -offset_y))
+
+    #scaled_surface = pygame.transform.scale(game_surface, zoomed_resolution) #scaled_surface = pygame.transform.scale(game_surface, monitor_resolution)
+    #game_window.blit(scaled_surface, (0, 0))
     pygame.display.flip()
 
 def draw_map(surface, tmx_data, camera_pos):
@@ -82,16 +91,20 @@ def load_player():
     player_image = pygame.image.load("./assets/sprites/player.png")
     spawn_point = tmx_level.get_object_by_name("spawn_player")
     player_pos = (spawn_point.x, spawn_point.y)
-    return player_image, player_pos
+    player_width = 16
+    player_height = 24
 
-def update_camera(camera_pos, player_rect, viewport_width, viewport_height):
-    camera_pos[0] = player_rect.centerx - viewport_width // 4
-    camera_pos[1] = player_rect.centery - viewport_height // 4
+    return player_image, player_pos, player_width, player_height
+
+def update_camera(camera_pos, player_pos, viewport_width, viewport_height):
+    camera_pos[0] = player_pos.x - viewport_width // 2
+    camera_pos[1] = player_pos.y - viewport_height // 2
 
 
 def main():
     print("Starting game!")
 
+    map.create_collision_map(tmx_level)
     player = Player(*load_player())
     
     running = True
@@ -101,7 +114,7 @@ def main():
         keys = pygame.key.get_pressed()
         player.update(keys)
 
-        update_camera(camera_pos, player.rect, game_resolution[0], game_resolution[1])
+        update_camera(camera_pos, player.position, game_resolution[0], game_resolution[1])
 
         running = handle_input()
         handle_rendering(player)

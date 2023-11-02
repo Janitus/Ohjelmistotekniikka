@@ -5,3 +5,4 @@ htmlcov
 *.psp
 *.tiled-project
 *.tsx
+*.tiled-session
