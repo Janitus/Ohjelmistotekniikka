@@ -44,11 +44,13 @@ TODO lista:
     - DONE: Kykenee ottamaan tiledillä luodut tiedot ja muuntamaan sen datan pelille soveltuvaksi
 - Pelilogiikka
     - DONE: Kameran liikkuvuus
-    - Pelaajien toiminnot (Liikkuminen, ampuminen, ym)
+    - Pelaajien toiminnot (Ampuminen, ym)
     - Vihollisten tekoäly
     - Tapahtumat (Esim. jos jokin pelaaja/vihollinen menee alueelle, käynnistetään jokin tapahtuma X)
     - Kenttien välinen tila, missä ladataan uudet kentät ja käydään kaupassa
-    - Mahdollisesti jotain perusfysiikkaa.
+    - DONE: Hyppiminen
+    - DONE: Collisionit
+    - DONE: Tikkaat
 - Tietovarasto
     - Pelaajan saavutukset
     - Kampanjoiden sisäiset tiedot (Esim. monta elämää, missä kentässä ollaan, jne)
@@ -56,11 +58,6 @@ TODO lista:
 - Lisää dokumentaatiota.
     - Systeemidokumentaatio
     - Ohjeistus kenttien ja kampanjoiden luomiselle ym.
-- Yleistä pelisuunnittelua sitä mukaan kun iteroiden menee.
-    - Liikkuvuus
-    - Valotus
-    - Vihollisten käyttäytyminen
-    - ym
 
 
 
