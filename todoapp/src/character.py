@@ -21,7 +21,9 @@ class Character(pygame.sprite.Sprite):
         self.speed = 2
         self.gravity = 0.15
         self.jumpPower = 4
-        self.hp = 10
+
+        self.hp = 4
+        self.max_hp = 10
 
         self.velocity_y = 0
 
@@ -31,6 +33,7 @@ class Character(pygame.sprite.Sprite):
             self.velocity_y = 0
             return
         self.velocity_y += self.gravity
+        self.velocity_y = min(self.velocity_y, 5)
         self.move(0, self.velocity_y)
 
     def move(self, dx, dy):
@@ -39,7 +42,7 @@ class Character(pygame.sprite.Sprite):
 
         if not self.collides(dx, 0): self.position.x += dx
 
-        if not self.collides(0, dy) and not self.onPlatform(): self.position.y += dy
+        if not self.collides(0, dy): self.position.y += dy
         else: self.velocity_y = 0
 
 
@@ -47,10 +50,6 @@ class Character(pygame.sprite.Sprite):
 
     def canClimb(self):
         if(map.get_ladder_by_coordinate(self.position.y,self.position.x)): return True
-        return False
-    
-    def onPlatform(self):
-        if(map.get_platform_by_coordinate(self.position.y+(map.tile_size-3),self.position.x)): return True
         return False
 
     def moveUpwards(self):
@@ -61,7 +60,7 @@ class Character(pygame.sprite.Sprite):
 
         # Jump
         #if(self.velocity_y < 0): return
-        if(not self.feet_on_ground()): return # or not self.onPlatform()
+        if(not self.feet_on_ground()): return
 
         print("jump!",self.velocity_y)
 
@@ -105,8 +104,6 @@ class Character(pygame.sprite.Sprite):
         new_x = int(self.position.x + dx + horizontal)
         new_y = int(self.position.y + dy + vertical)
 
-        print(vertical)
-        
         #print("pos",self.position," dest",tile, horizontal, vertical)
 
         if map.get_collision_by_coordinate(new_y,new_x): return True

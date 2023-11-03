@@ -51,6 +51,7 @@ TODO lista:
     - DONE: Hyppiminen
     - DONE: Collisionit
     - DONE: Tikkaat
+    - DONE: Valot
 - Tietovarasto
     - Pelaajan saavutukset
     - Kampanjoiden sisäiset tiedot (Esim. monta elämää, missä kentässä ollaan, jne)

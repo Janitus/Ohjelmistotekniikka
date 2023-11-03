@@ -4,6 +4,13 @@ from character import Character
 class Player(Character):
     def __init__(self, image, pos, width, height):
         super().__init__(image, pos, width, height)
+        self.gold = 0
+        
+        self.ammo = 4
+        self.max_ammo = 4
+        self.bomb = 1
+        self.max_bomb = 4
+
 
     def update(self, keys):
         super().update()

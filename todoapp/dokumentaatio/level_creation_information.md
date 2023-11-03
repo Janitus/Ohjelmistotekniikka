@@ -13,11 +13,16 @@ Layers:
 	
 Objects:
 	To create an object, create an object layer in the tiled editor. In order to create the following..
-	Spawns - Insert Point (I) and place them into the map. The name of the object will dictate the type of a spawn.
+	Spawns - Insert Point (I) (and place them into the map). The name of the object will dictate the type of a spawn.
 		"Player" - For player spawn
 		"Enemy0" - For x enemy..
 		.. Fill rest
-		
+
+	Light - Insert Point (I).
+		There is only one type of light, Point Light. To create a light, name the object "light" and give it two custom properties.
+			radius as integer field, with the integer becoming the radius in-game.
+			color as a color field.
+
 	TODO Zones, traps, etc.
 	
 The levels can be saved as .tmx. Make sure to name your levels as "Level" + number.

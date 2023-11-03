@@ -2,6 +2,8 @@ import pygame
 import pytmx
 from pytmx.util_pygame import load_pygame
 from player import Player
+from ui import UI
+from lighting import Lighting
 import map
 
 pygame.init()
@@ -11,11 +13,10 @@ pygame.display.set_caption ("Placeholder Name")
 # --------------- Set Display ---------------
 # -------------------------------------------
 
-info = pygame.display.Info()
-game_resolution = (800, 600)
-monitor_resolution = (info.current_w, info.current_h)
+window_height = 600
+window_width = 800
 
-#game_window = pygame.display.set_mode(monitor_resolution, pygame.NOFRAME) # Borderless
+game_resolution = (window_width, window_height)
 game_window = pygame.display.set_mode(game_resolution) # Windowed
 game_surface = pygame.Surface(game_resolution)
 
@@ -60,10 +61,12 @@ def handle_input():
             if event.key == pygame.K_ESCAPE: return False # TEMPORARY! REMOVE LATER! Only for testing purposes
     return True
 
-def handle_rendering(player):
+def handle_rendering(player, ui, lighting):
     game_surface.fill((40, 40, 40))
     draw_map(game_surface, tmx_level, camera_pos)
     player.draw(game_surface, camera_pos)
+
+    lighting.draw(game_surface, camera_pos)
 
     offset_x = (player.rect.centerx - camera_pos[0]) * zoom_amount - game_resolution[0] // 2
     offset_y = (player.rect.centery - camera_pos[1]) * zoom_amount - game_resolution[1] // 2
@@ -71,8 +74,8 @@ def handle_rendering(player):
     scaled_surface = pygame.transform.scale(game_surface, zoomed_resolution)
     game_window.blit(scaled_surface, (-offset_x, -offset_y))
 
-    #scaled_surface = pygame.transform.scale(game_surface, zoomed_resolution) #scaled_surface = pygame.transform.scale(game_surface, monitor_resolution)
-    #game_window.blit(scaled_surface, (0, 0))
+    ui.draw(game_window)
+
     pygame.display.flip()
 
 def draw_map(surface, tmx_data, camera_pos):
@@ -106,7 +109,11 @@ def main():
 
     map.create_collision_map(tmx_level)
     player = Player(*load_player())
+    ui = UI(player)
     
+    lighting = Lighting(window_width, window_height)
+    lighting.load_lights_from_map(tmx_level)
+
     running = True
     while running:
         clock.tick(clock_rate)
@@ -117,7 +124,8 @@ def main():
         update_camera(camera_pos, player.position, game_resolution[0], game_resolution[1])
 
         running = handle_input()
-        handle_rendering(player)
+        handle_rendering(player, ui, lighting)
+
 
     print("Exiting game!")
     pygame.quit()

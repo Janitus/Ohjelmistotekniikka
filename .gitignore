@@ -6,3 +6,5 @@ htmlcov
 *.tiled-project
 *.tsx
 *.tiled-session
+*.tx
+todoapp/assets/campaigns/tiledTemplates/
