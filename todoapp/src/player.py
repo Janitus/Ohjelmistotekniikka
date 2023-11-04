@@ -4,13 +4,11 @@ from character import Character
 class Player(Character):
     def __init__(self, image, pos, width, height):
         super().__init__(image, pos, width, height)
-        self.gold = 0
-        
+        self.money = 0
+        self.life = 3
         self.ammo = 4
         self.max_ammo = 4
-        self.bomb = 1
-        self.max_bomb = 4
-
+        self.keys = set()
 
     def update(self, keys):
         super().update()
@@ -22,6 +20,16 @@ class Player(Character):
             self.move(-self.speed, 0)
         if keys[pygame.K_d]:
             self.move(self.speed, 0)
+
+    def receive_key (self, key_name):
+        self.keys.add(key_name)
+        print(key_name)
+
+    def receive_ammo(self, amount):
+        if(amount <= 0): return
+        self.ammo += amount
+        self.ammo = min(self.ammo,self.max_ammo)
+
     def draw(self, surface, camera_pos):
         super().draw(surface, camera_pos)
 

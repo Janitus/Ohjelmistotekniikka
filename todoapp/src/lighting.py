@@ -65,4 +65,3 @@ class Lighting:
                         color = (color.g, color.b, color.a, color.r)
                         
                         self.add_light_source((posx, posy), radius, color)
-                        print("added light from file", obj)

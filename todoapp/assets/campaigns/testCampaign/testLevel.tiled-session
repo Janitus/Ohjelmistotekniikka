@@ -9,11 +9,11 @@
     ],
     "fileStates": {
         "Level1.tmx": {
-            "scale": 1.5,
-            "selectedLayer": 7,
+            "scale": 0.75,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 345.99999999999994,
-                "y": 282.66666666666663
+                "x": 521.3333333333333,
+                "y": 493.33333333333326
             }
         },
         "tileset.tsx": {
@@ -30,7 +30,7 @@
         "Level1.tmx"
     ],
     "project": "testLevel.tiled-project",
-    "property.type": "color",
+    "property.type": "object",
     "recentFiles": [
         "tileset.tsx",
         "Level1.tmx"

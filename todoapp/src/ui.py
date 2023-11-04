@@ -17,8 +17,8 @@ class UI:
         x = 10
         y = 10
 
-        hp = self.player.hp
-        max_hp = self.player.max_hp
+        hp = self.player.health
+        max_hp = self.player.max_health
 
         health_width = int((hp / max_hp) * 100)
         background_bar = pygame.draw.rect(surface, darkgray, (x, y, health_bar_width, 20))

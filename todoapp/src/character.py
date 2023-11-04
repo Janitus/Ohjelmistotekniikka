@@ -22,11 +22,19 @@ class Character(pygame.sprite.Sprite):
         self.gravity = 0.15
         self.jumpPower = 4
 
-        self.hp = 4
-        self.max_hp = 10
+        self.health = 4
+        self.max_health = 10
 
         self.velocity_y = 0
 
+    def damage(self, amount):
+        if(amount <= 0): return
+        self.health -= amount
+
+    def heal(self, amount):
+        if(amount <= 0): return
+        self.health += amount
+        self.health = min(self.health, self.max_health)
 
     def apply_gravity(self):
         if(self.canClimb()):
@@ -59,10 +67,7 @@ class Character(pygame.sprite.Sprite):
             return
 
         # Jump
-        #if(self.velocity_y < 0): return
         if(not self.feet_on_ground()): return
-
-        print("jump!",self.velocity_y)
 
         self.velocity_y = -self.jumpPower
 
@@ -108,3 +113,6 @@ class Character(pygame.sprite.Sprite):
 
         if map.get_collision_by_coordinate(new_y,new_x): return True
         return False
+
+    def get_rect(self):
+        return pygame.Rect(self.position.x, self.position.y, self.width, self.height)
