@@ -1,7 +1,8 @@
 class Zone:
-    def __init__(self, rect, additional_conditions):
+    def __init__(self, rect, additional_conditions, actions=[]):
         self.rect = rect
         self.conditions = [PlayerTouchingCondition(rect)]
+        self.actions = actions
         if additional_conditions: self.conditions.extend(additional_conditions)
 
     def is_activated(self, player):
@@ -10,6 +11,11 @@ class Zone:
                 #print(f"Condition {condition} failed for player {player}")
                 return False
         return True
+    
+    def activate(self):
+        for action in self.actions:
+            action.execute()
+
 
 class Condition:
     def check(self, player):
@@ -30,5 +36,7 @@ class PlayerHasKeyCondition(Condition):
 
     def check(self, player):
         has_key = self.required_key in player.keys
-        print(f"PlayerHasKeyCondition: {has_key}, Player Keys: {player.keys}, Required: {self.required_key}")
+        #print(f"PlayerHasKeyCondition: {has_key}, Player Keys: {player.keys}, Required: {self.required_key}")
         return has_key
+    
+    

@@ -25,16 +25,28 @@ class Character(pygame.sprite.Sprite):
         self.health = 4
         self.max_health = 10
 
+        self.invulnerability_duration = 0
+
+        self.last_hit = 0
         self.velocity_y = 0
+        self.direction = pygame.math.Vector2(-1, 0)
+
 
     def damage(self, amount):
-        if(amount <= 0): return
+        if (amount <= 0): return False
+        if (pygame.time.get_ticks() - self.last_hit < self.invulnerability_duration): return False
+
+        self.last_hit = pygame.time.get_ticks()
         self.health -= amount
+        self.health = max(self.health, 0)
+        return True
 
     def heal(self, amount):
         if(amount <= 0): return
         self.health += amount
         self.health = min(self.health, self.max_health)
+
+    def knock_up(self, amount): self.velocity_y = -amount
 
     def apply_gravity(self):
         if(self.canClimb()):
@@ -90,7 +102,11 @@ class Character(pygame.sprite.Sprite):
         adjusted_x = sprite_x - camera_pos[0]
         adjusted_y = sprite_y - camera_pos[1]
 
-        surface.blit(self.image, (adjusted_x, adjusted_y))
+        if(self.direction.x > 0):
+            flipped_image = pygame.transform.flip(self.image, True, False)
+            surface.blit(flipped_image, (adjusted_x, adjusted_y))
+        else:
+            surface.blit(self.image, (adjusted_x, adjusted_y))
 
     def center(self):   return (self.position.x, self.position.y - self.height//2)
 

@@ -2,6 +2,7 @@ import pygame
 import pytmx
 from pytmx.util_pygame import load_pygame
 from player import Player
+from enemy import Enemy
 from ui import UI
 from lighting import Lighting
 from renderer import Renderer
@@ -67,6 +68,21 @@ def load_player():
 
     return player_image, player_pos, player_width, player_height
 
+def load_enemies():
+    enemy_image = pygame.image.load("./assets/sprites/enemy0.png")
+    enemy_width = 16
+    enemy_height = 24
+    enemies = []
+
+    for object_group in tmx_level.objectgroups:
+        for obj in object_group:
+            if obj.name == "spawn_enemy0":
+                enemy_pos = (obj.x, obj.y)
+                enemy = Enemy(enemy_image, enemy_pos, enemy_width, enemy_height)
+                enemies.append(enemy)
+
+    return enemies
+
 def update_camera(camera_pos, player_pos, viewport_width, viewport_height):
     camera_pos[0] = player_pos.x - viewport_width // 2
     camera_pos[1] = player_pos.y - viewport_height // 2
@@ -76,15 +92,27 @@ def main():
 
     load_pickups()
 
-    map.create_collision_map(tmx_level)
-    pickups = map.load_pickups_from_map(tmx_level)
-    zones = map.load_zones_from_map(tmx_level)
+    pickups = None
+    actions = None
+    zones = None
+
+    try:
+        map.set_layers(tmx_level)
+        map.create_collision_map(tmx_level)
+        pickups = map.load_pickups_from_map(tmx_level)
+        actions = map.load_actions_from_map(tmx_level)
+        zones = map.load_zones_from_map(tmx_level, actions)
+    except ValueError as e:
+        print(e)
+        pygame.quit()
 
     renderer = Renderer(game_surface, tmx_level, game_window, game_resolution, zoomed_resolution)
     renderer.set_zoom_amount(2)
 
     player = Player(*load_player())
     ui = UI(player)
+
+    enemies = load_enemies()
     
     lighting = Lighting(window_width, window_height)
     lighting.load_lights_from_map(tmx_level)
@@ -96,6 +124,13 @@ def main():
         keys = pygame.key.get_pressed()
         player.update(keys)
 
+        for enemy in enemies:
+            if pygame.sprite.collide_rect(player, enemy):
+                if (player.damage(enemy.melee_damage)):
+                    player.knock_up(enemy.melee_knock)
+
+            enemy.update()
+
         for pickup in pickups:
             if player.rect.colliderect(pickup.rect):
                 pickup.apply_to_player(player)
@@ -103,17 +138,15 @@ def main():
 
         for zone in zones:
             if zone.is_activated(player):
-                print("activateitboi",zone)
-                #handle_zone_activation(zone, player)
+                zone.activate()
                 continue
             else:
                 continue
-                #print("Not touching. Player rect:", player.get_rect(), "Zone rect:", zone.rect)
 
         update_camera(camera_pos, player.position, game_resolution[0], game_resolution[1])
 
         running = handle_input()
-        renderer.handle_rendering(player, ui, lighting, camera_pos, pickups)
+        renderer.handle_rendering(player, ui, lighting, camera_pos, pickups, enemies)
 
 
     print("Exiting game!")

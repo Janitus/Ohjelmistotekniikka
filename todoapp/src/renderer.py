@@ -13,11 +13,12 @@ class Renderer:
     def set_zoom_amount(self, amount):
         self.zoom_amount = amount
 
-    def handle_rendering(self, player, ui, lighting, camera_pos, pickups):
+    def handle_rendering(self, player, ui, lighting, camera_pos, pickups, enemies):
         self.game_surface.fill((40, 40, 40))
         self.draw_map(camera_pos)
         player.draw(self.game_surface, camera_pos)
 
+        for enemy in enemies:enemy.draw(self.game_surface, camera_pos)
         for pickup in pickups: pickup.draw(self.game_surface, camera_pos)
 
         lighting.draw(self.game_surface, camera_pos)

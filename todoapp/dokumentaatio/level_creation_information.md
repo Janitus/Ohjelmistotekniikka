@@ -5,24 +5,41 @@ The configurations:
 Tile size: 32x32 pixels
 Tileset: assets/images/tileset.png
 Layers:
-	- Background - When a layer is supposed to only act as a background, name it as "Background" + .. Can have multiple
-	- Environment - When a layer is supposed to act as both walkable and collideable (e.g. wall), name it as "Walkable". Only one required
-	- Platform - When a layer is supposed to act only as walkable (But can jump to it from underneath), name it as "Platform". Only one required
-	- Over - Similar to background, but the objects will be placed in front of everything. These do not interact with anything! Can have multiple.
-	- Objects - See more details below. Name it as "Objects". Only one object layer is required
+	Functional:
+		- MANDATORY: "Environment" Layer. This is where collision map is created, and if a tile is not empty, everything will collide with this layer.
+		- MANDATORY: At least one Object Layer. You can name it whatever. Multiple object layers is recommended for ease of editing.
+		- "Ladder" Layer. A tile in this layer indicates that the spot is climbable.
+	Cosmetic:
+		- You can name these layers as you see fit. Anything placed in these layers are purely cosmetic and serve only to be rendered. Note that the order of the layers dictates the rendering order, so you can place these below or above the functional layers as you see fit.
 	
 Objects:
-	To create an object, create an object layer in the tiled editor. In order to create the following..
-	Spawns - Insert Point (I) (and place them into the map). The name of the object will dictate the type of a spawn.
-		"Player" - For player spawn
-		"Enemy0" - For x enemy..
-		.. Fill rest
+	To insert objects in tiled, you must use either Insert point (I) or Insert rectangle (R) and place them into the map. You also need at least one layer for objects to do this.
+
+	Spawns - Insert Point (I)
+		Rename the object as "spawn_" + substring according to your needs:
+			"player" - For player spawn
+			"myenemyname" - For the enemy..
 
 	Light - Insert Point (I).
-		There is only one type of light, Point Light. To create a light, name the object "light" and give it two custom properties.
-			radius as integer field, with the integer becoming the radius in-game.
-			color as a color field.
+		Rename the object as "light"
+		Give it two custom properties.
+			integer property with name radius, and a numerical value for it.
+			color property with the name color, and use tiled to set the color.
 
-	TODO Zones, traps, etc.
+	Zone - Insert Rectangle (R)
+		All zones are "triggers", meaning that they can be used to trigger certain actions. Those actions only trigger when all conditions are met simultaneously.
+		By default, all zones are given the following trigger: detect whether the player is in the zone, and if they are in, the condition is true.
+
+		Rename the object as "zone"
+		Set a condition. Available conditions:
+			string property with the name "key". The value of the key can be set as any string the user likes, for example, "red". This means that when a player has a "red" key, this condition will be true. An example: string property "key", value "red"
+
+		To trigger actions, you MUST create an object property (Same place as you create conditions in) with the name "action" + any optional substring. Then select any other object as your property value. To create actions as objects, read more under "Actions"
+
+	Actions - Insert point (I)
+		Rename the object as "action"
+		Create a string property. The property name dictate the action type. Those names are:
+			destroy - It will destroy a tile from the "Environment" layer when triggered.
+		
 	
-The levels can be saved as .tmx. Make sure to name your levels as "Level" + number.
+The levels are saved as .tmx. Make sure to name your levels as "Level" + number.
