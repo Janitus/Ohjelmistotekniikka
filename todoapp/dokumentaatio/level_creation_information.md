@@ -27,17 +27,20 @@ Cosmetic:
 To insert objects in tiled, you must use either Insert point (I) or Insert rectangle (R) and place them into the map. You also need at least one layer for objects to do this.
 
 Spawns - Insert Point (I)
+
 	Rename the object as "spawn_" + substring according to your needs:
 		"player" - For player spawn
 		"myenemyname" - For the enemy..
 
 Light - Insert Point (I).
+
 	Rename the object as "light"
 	Give it two custom properties.
 		integer property with name radius, and a numerical value for it.
 		color property with the name color, and use tiled to set the color.
 
 Zone - Insert Rectangle (R)
+
 	All zones are "triggers", meaning that they can be used to trigger certain actions. Those actions only trigger when all conditions are met simultaneously.
 	By default, all zones are given the following trigger: detect whether the player is in the zone, and if they are in, the condition is true.
 
@@ -48,6 +51,7 @@ Zone - Insert Rectangle (R)
 	To trigger actions, you MUST create an object property (Same place as you create conditions in) with the name "action" + any optional substring. Then select any other object as your property value. To create actions as objects, read more under "Actions"
 
 Actions - Insert point (I)
+
 	Rename the object as "action"
 	Create a string property. The property name dictate the action type. Those names are:
 		destroy - It will destroy a tile from the "Environment" layer when triggered.
