@@ -9,11 +9,11 @@
     ],
     "fileStates": {
         "Level1.tmx": {
-            "scale": 1.5,
+            "scale": 0.75,
             "selectedLayer": 8,
             "viewCenter": {
-                "x": 534.6666666666666,
-                "y": 688
+                "x": 453.33333333333326,
+                "y": 451.99999999999994
             }
         },
         "tileset.tsx": {

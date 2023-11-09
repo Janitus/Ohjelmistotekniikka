@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.8"
 cowsay = "^6.1"
 pygame = "^2.5.2"
+pytmx = "3.32"
 
 
 [build-system]
