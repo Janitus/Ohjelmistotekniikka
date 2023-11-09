@@ -10,6 +10,8 @@ class Player(Character):
         self.max_ammo = 4
         self.keys = set()
         self.invulnerability_duration = 1000
+        self.last_shot = -9999
+        self.shot_cooldown = 1000
 
     def update(self, keys):
         super().update()
@@ -24,7 +26,16 @@ class Player(Character):
             self.move(self.speed, 0)
             self.direction.x = 1
         if keys[pygame.K_LCTRL] or keys[pygame.K_RCTRL]:
-            print("shoot")
+            self.shoot()
+
+    def shoot(self):
+        if(self.ammo <= 0): return False
+        if (pygame.time.get_ticks() - self.last_shot < self.shot_cooldown): return False
+
+        self.last_shot = pygame.time.get_ticks()
+        self.ammo -= 1
+        print("shoot")
+        return True
 
     def receive_key (self, key_name):
         self.keys.add(key_name)
@@ -34,6 +45,17 @@ class Player(Character):
         if(amount <= 0): return
         self.ammo += amount
         self.ammo = min(self.ammo,self.max_ammo)
+
+    def receive_life(self, amount):
+        self.life += amount
+
+    def receive_money(self, amount):
+        self.money += amount
+
+    def purchase_item (self, price):
+        if(price > self.money): return False
+        self.money -= price
+        return True
 
     def draw(self, surface, camera_pos):
         super().draw(surface, camera_pos)

@@ -27,7 +27,7 @@ class Character(pygame.sprite.Sprite):
 
         self.invulnerability_duration = 0
 
-        self.last_hit = 0
+        self.last_hit = -9999
         self.velocity_y = 0
         self.direction = pygame.math.Vector2(-1, 0)
 

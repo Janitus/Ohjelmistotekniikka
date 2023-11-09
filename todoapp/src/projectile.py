@@ -3,7 +3,7 @@ import pygame
 class Projectile(pygame.sprite.Sprite):
     def __init__(self, pos, direction, speed, damage):
         super().__init__()
-        self.image = pygame.Surface((10, 5))
+        self.image = pygame.Surface((5, 5))
         self.image.fill((255, 0, 0))
         self.rect = self.image.get_rect(center=pos)
         self.position = pygame.math.Vector2(pos)
