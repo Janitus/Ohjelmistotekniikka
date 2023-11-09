@@ -6,6 +6,18 @@ Projekti on pienimuotoinen aarretasohyppely. Pelaajan tehtävänä on päästä 
 
 Projekti on suunniteltu pohjaksi kokonaiselle pelille, jota voidaan laajentaa, sekä sisällytän myös ohjeita, kuinka osan tästä työstä voi tehdä.
 
+# Käyttöohje
+
+1. git clone https://github.com/Janitus/Ohjelmistotekniikka
+
+2. cd todoapp
+
+3. poetry install - note: jos poetry install ei toimi, poista poetry.lock ja käytä komentoa uudestaan. Riippuvuudet pygame ja pytmx pitäisi asentua nyt!
+
+4. poetry run python src/game.py
+
+5. Pelin pitäisi käynnistyä!
+
 
 # Dokumentaatio
 
@@ -21,5 +33,7 @@ Ohjeet pickuppien luonnille: https://github.com/Janitus/Ohjelmistotekniikka/blob
 
 
 # Testaus
+
+Kokeiltu yliopiston cubbli linuxilla käyttäen VMWarea. Peli toimii odotetusti. 
 
 TODO

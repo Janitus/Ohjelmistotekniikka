@@ -4,7 +4,6 @@ __pycache__
 htmlcov
 *.psp
 *.tiled-project
-*.tsx
 *.tiled-session
 *.tx
 todoapp/assets/campaigns/tiledTemplates/
