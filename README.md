@@ -6,17 +6,19 @@ Projekti on pienimuotoinen aarretasohyppely. Pelaajan tehtävänä on päästä 
 
 Projekti on suunniteltu pohjaksi kokonaiselle pelille, jota voidaan laajentaa, sekä sisällytän myös ohjeita, kuinka osan tästä työstä voi tehdä.
 
-# Käyttöohje
+# Asennusohje
 
 1. git clone https://github.com/Janitus/Ohjelmistotekniikka
 
 2. cd todoapp
 
-3. poetry install - note: jos poetry install ei toimi, poista poetry.lock ja käytä komentoa uudestaan. Riippuvuudet pygame ja pytmx pitäisi asentua nyt!
+3. poetry install - note: jos poetry install ei toimi, poista poetry.lock ja käytä komentoa uudestaan. Riippuvuudet pygame ja pytmx pitäisi asentua nyt! poetry.lock tiedosto löytyy root/todoapp kansiosta, joissain systeemeissä tämä tiedosto on näkymätön joudut mahdollisesti etsimään tiedoston että se näkyy!
 
-4. poetry run python src/game.py
+# Käyttöohje
 
-5. Pelin pitäisi käynnistyä!
+1. poetry run python src/game.py
+
+2. Pelin pitäisi käynnistyä!
 
 
 # Dokumentaatio
@@ -34,6 +36,10 @@ Ohjeet pickuppien luonnille: https://github.com/Janitus/Ohjelmistotekniikka/blob
 
 # Testaus
 
-Kokeiltu yliopiston cubbli linuxilla käyttäen VMWarea. Peli toimii odotetusti. 
+Kokeiltu yliopiston cubbli linuxilla käyttäen VMWarea. Peli toimii odotetusti. Myös testikomennot toimivat odotetusti.
 
-TODO
+Testikomennot voi suorittaa /todoapp sisällä:
+
+1. poetry run coverage run --branch -m pytest src
+
+2. poetry run coverage report
