@@ -27,7 +27,7 @@ Työaikakirjaus: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoap
 
 Vaatimusmäärittelyt: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/vaatimusmaarittely.md
 
-Changelog: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/campaign_creation_information.md
+Changelog: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/change_log.md
 
 Ohjeet kenttäeditoinnille: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/level_creation_information.md
 
