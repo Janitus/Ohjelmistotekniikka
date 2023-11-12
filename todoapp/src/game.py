@@ -1,5 +1,4 @@
 import pygame
-import pytmx
 from pytmx.util_pygame import load_pygame
 from player import Player
 from enemy import Enemy

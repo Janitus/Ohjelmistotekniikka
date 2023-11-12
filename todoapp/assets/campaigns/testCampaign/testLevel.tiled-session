@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Level1.tmx",
+    "activeFile": "Shop.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -53,15 +53,16 @@
     "map.width": 15,
     "openFiles": [
         "tileset.tsx",
-        "Level1.tmx"
+        "Level1.tmx",
+        "Shop.tmx"
     ],
     "project": "testLevel.tiled-project",
     "property.type": "color",
     "recentFiles": [
-        "Shop.tmx",
-        "Level2.tmx",
         "tileset.tsx",
-        "Level1.tmx"
+        "Level1.tmx",
+        "Shop.tmx",
+        "Level2.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }
