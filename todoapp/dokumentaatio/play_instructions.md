@@ -6,3 +6,4 @@ Game controls
 - D or RIGHT Arrow = Walk right
 - S or DOWN Arrow = Climb downwards when on ladder
 - L or R Ctrl = Shoot
+- F9 = Cheat button, goes to next level. Can use this to test things asap!
