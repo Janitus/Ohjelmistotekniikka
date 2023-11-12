@@ -27,12 +27,15 @@ Työaikakirjaus: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoap
 
 Vaatimusmäärittelyt: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/vaatimusmaarittely.md
 
+Changelog: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/campaign_creation_information.md
+
 Ohjeet kenttäeditoinnille: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/level_creation_information.md
 
 Ohjeet pelaajalle: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/play_instructions.md
 
 Ohjeet pickuppien luonnille: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/pickup_creation_information.md
 
+Ohjeet kampanjan luonnille: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/campaign_creation_information.md
 
 # Testaus
 
