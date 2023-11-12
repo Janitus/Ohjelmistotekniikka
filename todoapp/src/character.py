@@ -4,6 +4,9 @@ class Character(pygame.sprite.Sprite):
     def __init__(self, image, pos, width=32, height=32):
         super().__init__()
 
+        # References
+        self.projectile_manager = None
+
         # Visuals
         self.image = image
         self.rect = self.image.get_rect(topleft=pos)
@@ -30,7 +33,7 @@ class Character(pygame.sprite.Sprite):
         self.last_hit = -9999
         self.velocity_y = 0
         self.direction = pygame.math.Vector2(-1, 0)
-
+        self.dead = False
 
     def damage(self, amount):
         if (amount <= 0): return False
@@ -39,7 +42,14 @@ class Character(pygame.sprite.Sprite):
         self.last_hit = pygame.time.get_ticks()
         self.health -= amount
         self.health = max(self.health, 0)
+
+        if(self.health == 0): self.die()
+
         return True
+    
+    def die(self):
+        self.dead = True
+        print("override death")
 
     def heal(self, amount):
         if(amount <= 0): return

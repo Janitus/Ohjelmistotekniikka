@@ -21,11 +21,8 @@ class DestroyAction(Action):
         # End gen
         return self.position
 
-class SpawnAction(Action):
-    def __init__(self):
-        print ("asd")
-
 class ExitAction(Action):
-    def __init__(self):
-        print ("asd")
+    def execute(self):
+        if(not super().execute()): return False
+        return "exit"
 

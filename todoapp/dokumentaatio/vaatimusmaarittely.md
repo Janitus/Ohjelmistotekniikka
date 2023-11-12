@@ -45,25 +45,25 @@ TODO lista:
 - Pelilogiikka
     - DONE: Kameran liikkuvuus
     - DONE: Hahmojen liikkuminen (Kävely, kiipeily, hyppiminen, painovoima)
-    - IN-PROGRESS: Pelaajien toiminnot (Ampuminen, ym)
+    - DONE: Pelaajien toiminnot (Ampuminen, ym)
     - DONE: Vihollisten tekoäly (Vihollisella perus tekoäly, osaa kävellä, vältellä putouksia ja kääntää suuntaa)
     - DONE: Tapahtumat (Esim. jos pelaaja menee alueelle, avataan vaikka ovi)
-    - Kenttien välinen tila, missä ladataan uudet kentät ja käydään kaupassa
+    - DONE: Kenttien välinen tila, missä ladataan uudet kentät ja käydään kaupassa
     - DONE: Hyppiminen
     - DONE: Collisionit
     - DONE: Tikkaat
     - DONE: Valot
-    - IN-PROGRESS: Projektiilit
+    - DONE: Projektiilit
     - DONE: Damage & Heal systeemi
 - Tietovarasto
     - Pelaajan saavutukset
-    - Kampanjoiden sisäiset tiedot (Esim. monta elämää, missä kentässä ollaan, jne)
+    - DONE: Kampanjajärjestelmä (Esim. monta elämää, missä kentässä ollaan, jne)
     - Asetustiedot
 - Lisää dokumentaatiota.
     - Systeemidokumentaatio
     - DONE: Työaikakirjaus
     - DONE: Peliohjeet
-    - IN-PROGRESS: Ohjeistus kenttien ja kampanjoiden luomiselle ym. Mahdollisia video tai kuva-ohjeita.
+    - DONE: Ohjeistus kenttien ja kampanjoiden luomiselle ym. Mahdollisia video tai kuva-ohjeita tulossa mikäli tarvitaan
 
 
 

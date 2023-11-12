@@ -10,6 +10,7 @@ class Lighting:
         self.darkness = pygame.Surface((screen_width, screen_height))
         self.light_sources = []
         self.torchlight = self.create_light_source((screen_width/2, screen_height/2), 150)
+        self.darkness_color = (128,128,128)
 
     def create_light_source(self, position, radius, input_color=(255,255,255)):
         R = input_color[0]
@@ -37,7 +38,7 @@ class Lighting:
     def draw(self, screen, camera_pos):
         max_dark_surface = pygame.Surface((self.screen_width, self.screen_height))
         max_dark_surface.fill((255, 255, 255))
-        self.darkness.fill((128, 128, 128))
+        self.darkness.fill(self.darkness_color)
 
         for light, world_position in self.light_sources:
             screen_position = (world_position[0] - camera_pos[0], world_position[1] - camera_pos[1])
@@ -51,7 +52,15 @@ class Lighting:
         self.darkness.blit(max_dark_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         screen.blit(self.darkness, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
+    def converted_color(self, color):
+        color = pygame.Color(color)
+        color = (color.g, color.b, color.a, color.r)
+        return color
+
     def load_lights_from_map(self, tmx_data):
+        map_darkness = tmx_data.properties.get('darkness', None)
+        if (map_darkness != None): self.darkness_color = self.converted_color(map_darkness)
+
         for layer in tmx_data.layers:
             if isinstance(layer, pytmx.TiledObjectGroup):
                 for obj in layer:
@@ -60,8 +69,8 @@ class Lighting:
                         radius = int(obj.properties.get("radius", 100))
                         color = obj.properties.get("color", "#ffffff")
 
-                        # NOTE. for some reason tiled's color channels are in format AARRGGBB. We want RRGGBBAA, so we're converting them to it. This is not a bug!
-                        color = pygame.Color(color)
-                        color = (color.g, color.b, color.a, color.r)
+                        #color = pygame.Color(color)
+                        #color = (color.g, color.b, color.a, color.r)
                         
-                        self.add_light_source((posx, posy), radius, color)
+                        self.add_light_source((posx, posy), radius, self.converted_color(color))
+

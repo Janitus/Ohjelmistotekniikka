@@ -8,6 +8,26 @@ Tile size: 32x32 pixels
 
 Tileset: assets/images/tileset.png
 
+# Quickstart
+
+To create a functioning from start to finish map, you need to create the following things
+
+	1. Environment layer (This is where players can walk and collide on)
+
+	2. At least one object layer
+
+	3. ..where you place a point object with the name "spawn_player"
+
+	4. ..where you place a rectangular zone with the name "zone", with a custom string property named "exit"
+
+	5. include the map in a campaign, by placing it in the same directory, and writing this level's name inside the order.txt
+
+# Map information
+
+Lighting:
+
+	You can set the lighting by Map -> Map Properties -> Find Custom Properties -> Add a color property -> Name it "darkness" -> Select color. Default is (128, 128, 128)
+
 # Tile Layers:
 
 Functional:
@@ -30,7 +50,7 @@ Spawns - Insert Point (I)
 
 	Rename the object as "spawn_" + substring according to your needs:
 		"player" - For player spawn
-		"myenemyname" - For the enemy..
+		"myenemyname" - For the enemy based on their name
 
 Light - Insert Point (I).
 
@@ -48,7 +68,14 @@ Zone - Insert Rectangle (R)
 	Set a condition. Available conditions:
 		string property with the name "key". The value of the key can be set as any string the user likes, for example, "red". This means that when a player has a "red" key, this condition will be true. An example: string property "key", value "red"
 
-	To trigger actions, you MUST create an object property (Same place as you create conditions in) with the name "action" + any optional substring. Then select any other object as your property value. To create actions as objects, read more under "Actions"
+	To trigger actions you have two options
+
+	1. Embedded actions
+		Embedded actions are directly created within zones. These can be done by clicking the zone, and setting a custom property.
+		"exit" (as string property) - For entering the next level
+	
+	2. External actions
+		Create a custom property (as object property), with the name "action" + any optional substring. Then select any other object as your property value. To create actions as objects, read more under "Actions"
 
 Actions - Insert point (I)
 
@@ -58,4 +85,4 @@ Actions - Insert point (I)
 		
 # Save information
 	
-The levels are saved as .tmx. Make sure to name your levels as "Level" + number. This section is a very WIP still.
+The levels are saved as .tmx. You can name your levels any name.

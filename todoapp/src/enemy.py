@@ -3,7 +3,6 @@ from character import Character
 
 class Enemy(Character):
     def __init__(self, image, pos, width=16, height=24):
-        print("enemy spawned")
         super().__init__(image, pos, width, height)
         self.avoids_falls = True
         self.speed = 0.5
@@ -13,6 +12,9 @@ class Enemy(Character):
     def update(self):
         self.patrol()
         super().update()
+
+    def die(self):
+        self.dead = True
 
     def patrol(self):
         if (self.avoids_falls and self.is_facing_a_fall()): self.direction.x *= -1

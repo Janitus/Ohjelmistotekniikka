@@ -13,8 +13,10 @@ class Zone:
         return True
     
     def activate(self):
+        messages = []
         for action in self.actions:
-            action.execute()
+            messages = action.execute()
+        return messages
 
 
 class Condition:

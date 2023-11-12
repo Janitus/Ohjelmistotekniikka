@@ -38,7 +38,7 @@ class Pickup:
 
 
 
-def load_pickups():
+def load_pickup_types():
     global pickups
     for pickup_name in os.listdir(pickup_directory):
         pickup_dir = os.path.join(pickup_directory, pickup_name)
@@ -61,4 +61,4 @@ def load_pickups():
 
 def fetch_pickup(pickup_name): return pickups.get(pickup_name)
 
-pickups = load_pickups()
+pickups = load_pickup_types()

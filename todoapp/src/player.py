@@ -1,9 +1,10 @@
 import pygame
 from character import Character
+from projectile_manager import ProjectileManager
 
 class Player(Character):
-    def __init__(self, image, pos, width=16, height=24):
-        super().__init__(image, pos, width, height)
+    def __init__(self, image, width=16, height=24):
+        super().__init__(image, (0,0), width, height)
         self.money = 0
         self.life = 3
         self.ammo = 4
@@ -11,7 +12,7 @@ class Player(Character):
         self.keys = set()
         self.invulnerability_duration = 1000
         self.last_shot = -9999
-        self.shot_cooldown = 1000
+        self.shot_cooldown = 100
 
     def update(self, keys):
         super().update()
@@ -34,12 +35,16 @@ class Player(Character):
 
         self.last_shot = pygame.time.get_ticks()
         self.ammo -= 1
-        print("shoot")
+
+        projectile = ProjectileManager.create_projectile(self.projectile_manager, self.center(), self.direction, "player")
+        projectile.speed = 5
+        projectile.knock_power = 1.2
+        projectile.set_size(5,2)
+        projectile.set_color(255,200,150)
+
         return True
 
-    def receive_key (self, key_name):
-        self.keys.add(key_name)
-        print(key_name)
+    def receive_key (self, key_name): self.keys.add(key_name)
 
     def receive_ammo(self, amount):
         if(amount <= 0): return
@@ -56,9 +61,13 @@ class Player(Character):
         if(price > self.money): return False
         self.money -= price
         return True
+    
+    def die(self): self.dead = True
+
+    def respawn(self):
+        self.life -= 1
+        self.health = self.max_health
+        self.dead = False
 
     def draw(self, surface, camera_pos):
         super().draw(surface, camera_pos)
-
-        #surface.blit(self.image, (self.rect.x - camera_pos[0], self.rect.y - camera_pos[1]))
-        #surface.blit(self.image, self.rect)

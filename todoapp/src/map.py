@@ -44,7 +44,6 @@ def create_collision_map(tmx_level):
                     if tile:
                         if layer.name == 'Environment': collision_map[y][x] = True
                         if layer.name == 'Ladder': ladder_map[y][x] = True
-    print("map data created!")
 
 def create_pickup_instance(pickup_name, position):
     template = pickups.get(pickup_name)
@@ -59,7 +58,7 @@ def load_pickups_from_map(tmx_data):
     prefix = "pickup_"
     for object_group in tmx_data.objectgroups:
         for obj in object_group:
-            if obj.name.startswith(prefix):
+            if obj.name and obj.name.startswith(prefix):
                 pickup_type = obj.name[len(prefix):]  # We remove the prefix to get the actual pickup name
                 pickup_instance = create_pickup_instance(pickup_type, (obj.x, obj.y))
                 if pickup_instance:
@@ -71,7 +70,7 @@ def load_zones_from_map(tmx_data, actions):
     prefix = "zone"
     for object_group in tmx_data.objectgroups:
         for obj in object_group:
-            if obj.name.startswith(prefix):
+            if obj.name and obj.name.startswith(prefix):
                 rect = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
                 additional_conditions = []
                 zone_actions = []
@@ -79,10 +78,6 @@ def load_zones_from_map(tmx_data, actions):
                 key_name = obj.properties.get('key')
                 if key_name:
                     additional_conditions.append(PlayerHasKeyCondition(key_name))
-
-                #action_id = obj.properties.get('action')
-                #if action_id:
-                #    zone_actions.append(actions[action_id])
 
                 for property_name, property_value in obj.properties.items():
                     # The reason we do this like this, is the constraint in tiled that prevents us from having multiple fields with the same name.
@@ -93,6 +88,10 @@ def load_zones_from_map(tmx_data, actions):
                         if action_id in actions:
                             zone_actions.append(actions[action_id])
 
+                    if property_name.startswith("exit"):
+                        exit_action = action.ExitAction()
+                        zone_actions.append(exit_action)
+
                 zones.append(Zone(rect, additional_conditions, zone_actions))
     return zones
 
@@ -101,8 +100,7 @@ def load_actions_from_map(tmx_data):
     prefix = "action"
     for object_group in tmx_data.objectgroups:
         for obj in object_group:
-            if obj.name.startswith(prefix):
-                print("action",obj)
+            if obj.name and obj.name.startswith(prefix):
                 if 'destroy' in obj.properties:
                     actions[obj.id] = action.DestroyAction(obj.id, (obj.x, obj.y))
 
