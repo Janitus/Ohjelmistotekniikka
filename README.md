@@ -16,9 +16,11 @@ Projekti on suunniteltu pohjaksi kokonaiselle pelille, jota voidaan laajentaa, s
 
 # Käyttöohje
 
-1. poetry run python src/game.py
+1. cd todoapp
 
-2. Pelin pitäisi käynnistyä!
+2. poetry run invoke start HUOM! Jos haluat kokeilla omaa kampanjaasi, käytä: poetry run invoke start --campaign=kampanjanimi
+
+3. Pelin pitäisi käynnistyä!
 
 
 # Dokumentaatio
@@ -43,6 +45,6 @@ Kokeiltu yliopiston cubbli linuxilla käyttäen VMWarea. Peli toimii odotetusti.
 
 Testikomennot voi suorittaa /todoapp sisällä:
 
-1. poetry run coverage run --branch -m pytest src
+- poetry run invoke test
 
-2. poetry run coverage report
+- poetry run invoke coverage-report

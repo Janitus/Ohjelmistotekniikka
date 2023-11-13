@@ -6,4 +6,5 @@ htmlcov
 *.tiled-project
 *.tiled-session
 *.tx
+.pylintrc
 todoapp/assets/campaigns/tiledTemplates/

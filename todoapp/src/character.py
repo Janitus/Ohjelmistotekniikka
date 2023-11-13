@@ -1,7 +1,10 @@
-import pygame, map
+import pygame
+from map import get_collision_by_coordinate
+from map import get_ladder_by_coordinate
+
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, image, pos, width=32, height=32):
+    def __init__(self, image, width=32, height=32):
         super().__init__()
 
         # References
@@ -9,7 +12,7 @@ class Character(pygame.sprite.Sprite):
 
         # Visuals
         self.image = image
-        self.rect = self.image.get_rect(topleft=pos)
+        self.rect = self.image.get_rect(topleft=(0, 0))
 
         # Sprite offset
         self.spritewidth = self.rect[2]
@@ -18,16 +21,14 @@ class Character(pygame.sprite.Sprite):
         # Collision
         self.width = width
         self.height = height
-        self.position = pygame.math.Vector2(pos)
+        self.position = pygame.math.Vector2((0, 0))
 
         # Stats
-        self.speed = 2
+        self.speed = 0.5
         self.gravity = 0.15
-        self.jumpPower = 4
-
-        self.health = 4
-        self.max_health = 10
-
+        self.jump_power = 4
+        self.health = 1
+        self.max_health = 1
         self.invulnerability_duration = 0
 
         self.last_hit = -9999
@@ -36,30 +37,35 @@ class Character(pygame.sprite.Sprite):
         self.dead = False
 
     def damage(self, amount):
-        if (amount <= 0): return False
-        if (pygame.time.get_ticks() - self.last_hit < self.invulnerability_duration): return False
+        if amount <= 0:
+            return False
+        if pygame.time.get_ticks() - self.last_hit < self.invulnerability_duration:
+            return False
 
         self.last_hit = pygame.time.get_ticks()
         self.health -= amount
         self.health = max(self.health, 0)
 
-        if(self.health == 0): self.die()
+        if self.health == 0:
+            self.die()
 
         return True
-    
+
     def die(self):
         self.dead = True
         print("override death")
 
     def heal(self, amount):
-        if(amount <= 0): return
+        if amount <= 0:
+            return
         self.health += amount
         self.health = min(self.health, self.max_health)
 
-    def knock_up(self, amount): self.velocity_y = -amount
+    def knock_up(self, amount):
+        self.velocity_y = -amount
 
     def apply_gravity(self):
-        if(self.canClimb()):
+        if self.can_climb():
             self.velocity_y = 0
             return
         self.velocity_y += self.gravity
@@ -67,39 +73,40 @@ class Character(pygame.sprite.Sprite):
         self.move(0, self.velocity_y)
 
     def move(self, dx, dy):
-        # This function has an issue. The issue is that if the character moves towards the collideable target too fast, there may be a gap between the character and the collideable.
-        # This could be fixed by snapping the character as close to the collision as possible, but we'll leave it for later.
-
-        if not self.collides(dx, 0): self.position.x += dx
-
-        if not self.collides(0, dy): self.position.y += dy
-        else: self.velocity_y = 0
-
+        if not self.collides(dx, 0):
+            self.position.x += dx
+        if not self.collides(0, dy):
+            self.position.y += dy
+        else:
+            self.velocity_y = 0
 
         self.rect.center = self.position
 
-    def canClimb(self):
-        if(map.get_ladder_by_coordinate(self.position.y,self.position.x)): return True
+    def can_climb(self):
+        if get_ladder_by_coordinate(self.position.y, self.position.x):
+            return True
         return False
 
-    def moveUpwards(self):
+    def move_upwards(self):
         # Check if ladder present, otherwise attempt to jump
-        if(self.canClimb()):
-            self.move(0,-self.speed)
+        if self.can_climb():
+            self.move(0, -self.speed)
             return
 
         # Jump
-        if(not self.feet_on_ground()): return
+        if not self.feet_on_ground():
+            return
 
-        self.velocity_y = -self.jumpPower
+        self.velocity_y = -self.jump_power
 
-    def moveDownwards(self):
-        if(self.canClimb()):
-            self.move(0,self.speed)
+    def move_downwards(self):
+        if self.can_climb():
+            self.move(0, self.speed)
             return
 
     def feet_on_ground(self):
-        if(map.get_collision_by_coordinate(self.position.y+3,self.position.x)): return True
+        if get_collision_by_coordinate(self.position.y+3, self.position.x):
+            return True
         return False
 
     def update(self):
@@ -112,32 +119,33 @@ class Character(pygame.sprite.Sprite):
         adjusted_x = sprite_x - camera_pos[0]
         adjusted_y = sprite_y - camera_pos[1]
 
-        if(self.direction.x > 0):
+        if self.direction.x > 0:
             flipped_image = pygame.transform.flip(self.image, True, False)
             surface.blit(flipped_image, (adjusted_x, adjusted_y))
         else:
             surface.blit(self.image, (adjusted_x, adjusted_y))
 
-    def center(self):   return (self.position.x, self.position.y - self.height//2)
+    def center(self):
+        return (self.position.x, self.position.y - self.height//2)
 
     def collides(self, dx, dy):
-        # Horizontal and vertical are added towards the direction the character is moving towards. This way we can apply width and height to check for collisions!
-        # Note to self, there is probably a bug if the width/height are larger than the tilewidth, as we're not checking the closest tile. Check later.
-        # Also it would only be checking for one tile and not multiple as we may want to!
-
         horizontal = 0
         vertical = 0
 
-        if(dx < 0): horizontal = -self.width//2
-        elif(dx > 0): horizontal = self.width//2
-        if(dy < 0): vertical = -self.height
+        if dx < 0:
+            horizontal = -self.width//2
+        elif dx > 0:
+            horizontal = self.width//2
+        if dy < 0:
+            vertical = -self.height
 
-        new_x = int(self.position.x + dx + horizontal)
-        new_y = int(self.position.y + dy + vertical)
+        new_x = int(self.position[0] + dx + horizontal)
+        new_y = int(self.position[1] + dy + vertical)
 
-        #print("pos",self.position," dest",tile, horizontal, vertical)
+        # print("pos",self.position," dest",tile, horizontal, vertical)
 
-        if map.get_collision_by_coordinate(new_y,new_x): return True
+        if get_collision_by_coordinate(new_y, new_x):
+            return True
         return False
 
     def get_rect(self):

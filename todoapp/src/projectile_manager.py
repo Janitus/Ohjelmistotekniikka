@@ -1,5 +1,5 @@
 from projectile import Projectile
-import map
+
 
 class ProjectileManager():
     def __init__(self, player, enemies):
@@ -33,5 +33,5 @@ class ProjectileManager():
             if self.player.rect.colliderect(projectile.rect):
                 self.player.damage(projectile.damage)
                 return True
-            
+
         return False

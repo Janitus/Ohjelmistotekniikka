@@ -2,24 +2,31 @@ import pygame
 from character import Character
 from projectile_manager import ProjectileManager
 
+
 class Player(Character):
     def __init__(self, image, width=16, height=24):
-        super().__init__(image, (0,0), width, height)
+        super().__init__(image, width, height)
         self.money = 0
         self.life = 3
         self.ammo = 4
         self.max_ammo = 4
         self.keys = set()
+
         self.invulnerability_duration = 1000
         self.last_shot = -9999
-        self.shot_cooldown = 100
+        self.shot_cooldown = 1000
+        self.jump_power = 4
+        self.speed = 2
+        self.gravity = 0.15
+        self.health = 10
+        self.max_health = 10
 
     def update(self, keys):
         super().update()
         if keys[pygame.K_w] or keys[pygame.K_UP]:
-            self.moveUpwards()
+            self.move_upwards()
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-            self.moveDownwards()
+            self.move_downwards()
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.move(-self.speed, 0)
             self.direction.x = -1
@@ -30,26 +37,31 @@ class Player(Character):
             self.shoot()
 
     def shoot(self):
-        if(self.ammo <= 0): return False
-        if (pygame.time.get_ticks() - self.last_shot < self.shot_cooldown): return False
+        if self.ammo <= 0:
+            return False
+        if pygame.time.get_ticks() - self.last_shot < self.shot_cooldown:
+            return False
 
         self.last_shot = pygame.time.get_ticks()
         self.ammo -= 1
 
-        projectile = ProjectileManager.create_projectile(self.projectile_manager, self.center(), self.direction, "player")
+        projectile = ProjectileManager.create_projectile(
+            self.projectile_manager, self.center(), self.direction, "player")
         projectile.speed = 5
         projectile.knock_power = 1.2
-        projectile.set_size(5,2)
-        projectile.set_color(255,200,150)
+        projectile.set_size(5, 2)
+        projectile.set_color(255, 200, 150)
 
         return True
 
-    def receive_key (self, key_name): self.keys.add(key_name)
+    def receive_key(self, key_name):
+        self.keys.add(key_name)
 
     def receive_ammo(self, amount):
-        if(amount <= 0): return
+        if amount <= 0:
+            return
         self.ammo += amount
-        self.ammo = min(self.ammo,self.max_ammo)
+        self.ammo = min(self.ammo, self.max_ammo)
 
     def receive_life(self, amount):
         self.life += amount
@@ -57,17 +69,16 @@ class Player(Character):
     def receive_money(self, amount):
         self.money += amount
 
-    def purchase_item (self, price):
-        if(price > self.money): return False
+    def purchase_item(self, price):
+        if price > self.money:
+            return False
         self.money -= price
         return True
-    
-    def die(self): self.dead = True
+
+    def die(self):
+        self.dead = True
 
     def respawn(self):
         self.life -= 1
         self.health = self.max_health
         self.dead = False
-
-    def draw(self, surface, camera_pos):
-        super().draw(surface, camera_pos)

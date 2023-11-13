@@ -7,8 +7,9 @@ red = (255, 0, 0)
 blue = (0, 0, 255)
 white = (255, 255, 255)
 
-bar_width = 100
+BAR_WIDTH = 100
 font = pygame.font.Font(None, 22)
+
 
 class UI:
     def __init__(self, player):
@@ -22,7 +23,8 @@ class UI:
         max_hp = self.player.max_health
 
         health_width = int((hp / max_hp) * 100)
-        background_bar = pygame.draw.rect(surface, darkgray, (x, y, bar_width, 20))
+        background_bar = pygame.draw.rect(
+            surface, darkgray, (x, y, BAR_WIDTH, 20))
         pygame.draw.rect(surface, red, (x, y, health_width, 20))
 
         text_surf = font.render(f"{hp} / {max_hp} health", True, white)
@@ -38,7 +40,8 @@ class UI:
         max_ammo = self.player.max_ammo
 
         ammo_width = int((ammo / max_ammo) * 100)
-        background_bar = pygame.draw.rect(surface, darkgray, (x, y, bar_width, 20))
+        background_bar = pygame.draw.rect(
+            surface, darkgray, (x, y, BAR_WIDTH, 20))
 
         pygame.draw.rect(surface, blue, (x, y, ammo_width, 20))
 
@@ -47,7 +50,7 @@ class UI:
 
         surface.blit(text_surf, text_rect)
 
-    def draw_money (self, surface):
+    def draw_money(self, surface):
         x = 10
         y = 60
 
@@ -57,7 +60,7 @@ class UI:
 
         surface.blit(text_surf, (x, y))
 
-    def draw_lives (self, surface):
+    def draw_lives(self, surface):
         x = 10
         y = 85
 

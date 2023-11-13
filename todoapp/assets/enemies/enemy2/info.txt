@@ -1,0 +1,9 @@
+speed:2
+melee_damage:2
+melee_knock:3
+width:16
+height:24
+health:2
+max_health:2
+gravity:0.15
+avoid_falls:true

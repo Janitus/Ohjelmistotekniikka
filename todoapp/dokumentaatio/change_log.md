@@ -23,3 +23,7 @@
 - Kampanjasysteemi. Peli tukee seuraavaan kenttään siirtymistä, ja viimeisen kentän suorituttuaan voitat pelin!
 
 - Avaimet sekä ovien avaaminen niillä
+
+## Viikko 3
+
+- Lisättiin mahdollisuus luoda omia vihollisia, sekä ohjeet näille

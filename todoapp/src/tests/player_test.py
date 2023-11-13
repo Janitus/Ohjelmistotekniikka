@@ -1,6 +1,8 @@
 import unittest
-import player, game
+import player
+import game
 import pygame
+
 
 class TestPlayer(unittest.TestCase):
     def setUp(self):
@@ -27,7 +29,7 @@ class TestPlayer(unittest.TestCase):
         self.player.damage(5)
         self.assertEqual(self.player.health, 5)
 
-    def test_fatal_damage_kills (self):
+    def test_fatal_damage_kills(self):
         self.player.damage(99)
         self.assertEqual(self.player.health, 0)
         self.assertTrue(self.player.dead)
@@ -62,13 +64,13 @@ class TestPlayer(unittest.TestCase):
 
     def test_respawn_reduces_life_by_one(self):
         self.player.respawn()
-        self.assertEqual(self.player.life,2)
+        self.assertEqual(self.player.life, 2)
 
     def test_respawn_heals_player_to_full(self):
         self.player.max_health = 10
         self.player.health = 5
         self.player.respawn()
-        self.assertEqual(self.player.health,10)
+        self.assertEqual(self.player.health, 10)
 
     def test_respawn_sets_dead_to_false(self):
         self.player.dead = True
@@ -90,24 +92,24 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.player.ammo, 4)
 
     # Disabled as the system is now dependant on projectile systems. Will remake once the projectile tests are in!
-    #def test_shooting_with_ammo(self):
+    # def test_shooting_with_ammo(self):
     #    self.assertTrue(self.player.shoot())
     #    self.assertEqual(self.player.ammo, 0)
 #
-    #def test_shooting_without(self):
+    # def test_shooting_without(self):
     #    self.player.ammo = 0
     #    self.assertFalse(self.player.shoot())
     #    self.assertEqual(self.player.ammo, 0)
 #
-    #def test_shooting_too_fast(self):
+    # def test_shooting_too_fast(self):
     #    self.player.shot_cooldown = 100
     #    self.player.ammo = 2
     #    self.assertTrue(self.player.shoot())
     #    pygame.time.delay(50)
     #    self.assertFalse(self.player.shoot())
-    #    
+    #
 #
-    #def test_shooting_on_time(self):
+    # def test_shooting_on_time(self):
     #    self.player.shot_cooldown = 100
     #    self.player.ammo = 2
     #    self.assertTrue(self.player.shoot())
@@ -121,7 +123,7 @@ class TestPlayer(unittest.TestCase):
 
     def test_height(self):
         self.assertEqual(self.player.height, 24)
-    
+
     # Life
 
     def test_lives(self):
@@ -154,7 +156,7 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(len(self.player.keys), 0)
 
     def test_player_receives_some_key(self):
-        self.player.receive_key ("somekey")
+        self.player.receive_key("somekey")
         self.assertEqual(len(self.player.keys), 1)
         self.assertTrue(self.player.keys.__contains__("somekey"))
 

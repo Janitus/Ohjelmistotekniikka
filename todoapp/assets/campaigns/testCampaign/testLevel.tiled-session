@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Shop.tmx",
+    "activeFile": "Level1.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -15,11 +15,11 @@
                 13,
                 6
             ],
-            "scale": 1,
-            "selectedLayer": 5,
+            "scale": 2,
+            "selectedLayer": 8,
             "viewCenter": {
-                "x": 416,
-                "y": 211
+                "x": 535,
+                "y": 837
             }
         },
         "Level2.tmx": {
@@ -37,8 +37,8 @@
             "scale": 2,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 250,
-                "y": 264
+                "x": 249.5,
+                "y": 263.5
             }
         },
         "tileset.tsx": {
@@ -60,8 +60,8 @@
     "property.type": "color",
     "recentFiles": [
         "tileset.tsx",
-        "Level1.tmx",
         "Shop.tmx",
+        "Level1.tmx",
         "Level2.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
