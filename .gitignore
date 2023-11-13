@@ -8,3 +8,4 @@ htmlcov
 *.tx
 .pylintrc
 todoapp/assets/campaigns/tiledTemplates/
+todoapp/.vscode
