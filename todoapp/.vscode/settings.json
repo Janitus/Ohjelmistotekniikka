@@ -1,7 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "./src/visuals",
-        "./src",
-        "./src/visual"
-    ]
-}
