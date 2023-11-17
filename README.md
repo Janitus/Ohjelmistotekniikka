@@ -33,6 +33,8 @@ Changelog: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/doku
 
 Peliohjeet: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/play_instructions.md
 
+Sekvenssidiagrammi: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/sequencediagram.png
+
 # Luontiohjeet
 
 Kentät: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/level_creation_information.md
