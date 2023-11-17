@@ -10,6 +10,7 @@
 | 9.11   | 6   | Testattiin yliopiston koneella toimivuus (Toimi), lisättiin asennus ja käynnistysohje readmehen. Luotiin myös testejä. |
 | 10.11   | 1   | Varmistettiin, että testitkin pyörivät yliopiston koneella, sekä lisättiin ohjeistusta testaukselle |
 | 12.11   | 10   | Lisättiin UI:seen ammukset ja score. Projektiilitoiminnallisuudet viimeisteltiin. Kampanjasysteemi, valotus, dokumentaatiota, elämät. |
-| 13.11   | 7   | Lisättiin invoke, sekä vaaditut komennot sille. Lisättiin myös kyky luoda vihollisia, sekä dokumentaatio tälle. Lisättiin myös testejä, sekä hieman koodin refaktorointia (pylintin murjaisemana) |
+| 13.11   | 8   | Lisättiin invoke, sekä vaaditut komennot sille. Lisättiin myös kyky luoda vihollisia, sekä dokumentaatio tälle. Lisättiin myös testejä, sekä hieman koodin refaktorointia (pylintin murjaisemana), sekvenssikaavio. |
+| 17.11   | 3   | Lisättiin kyky luoda ostettavia tavaroita, laajennettiin hieman pickuppien variaatiota ja luotiin renderöitävä teksti hinnoille. Ostomekanismit toimivat. Lisättiin testejä. Peli on aikalailla nyt valmis, enään tarvitsee testejä viedä kotiin. |
 
-Kokonaiset työtunnit (13.11): 73 tuntia
+Kokonaiset työtunnit (17.11): 77 tuntia

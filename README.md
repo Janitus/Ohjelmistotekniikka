@@ -31,13 +31,19 @@ Vaatimusmäärittelyt: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/
 
 Changelog: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/change_log.md
 
-Ohjeet kenttäeditoinnille: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/level_creation_information.md
+Peliohjeet: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/play_instructions.md
 
-Ohjeet pelaajalle: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/play_instructions.md
+# Luontiohjeet
 
-Ohjeet pickuppien luonnille: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/pickup_creation_information.md
+Kentät: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/level_creation_information.md
 
-Ohjeet kampanjan luonnille: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/campaign_creation_information.md
+Viholliset: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/enemy_creation_information.md
+
+Pickupit: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/pickup_creation_information.md
+
+Kampanjat: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/campaign_creation_information.md
+
+
 
 # Testaus
 
@@ -48,3 +54,5 @@ Testikomennot voi suorittaa /todoapp sisällä:
 - poetry run invoke test
 
 - poetry run invoke coverage-report
+
+- poetry run invoke lint

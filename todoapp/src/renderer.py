@@ -1,9 +1,11 @@
+"""Renderer that handles rendering everything onto the game window"""
 import pygame
 import pytmx
 from projectile_manager import ProjectileManager
 
 
 class Renderer:
+    """Renders everything in the game"""
     def __init__(self, game_surface, game_window, game_resolution, zoomed_resolution):
         self.game_surface = game_surface
         self.tmx_level = None
@@ -13,6 +15,7 @@ class Renderer:
         self.zoom_amount = 1
 
     def handle_rendering(self, player, ui, lighting, camera_pos, pickups, enemies, projectile_manager: ProjectileManager):
+        """Takes everything renderable as input and renders them"""
         self.game_surface.fill((40, 40, 40))
 
         if self.tmx_level is not None:
@@ -41,6 +44,7 @@ class Renderer:
         pygame.display.flip()
 
     def draw_message_screen(self, message="Loading next level", color_fill=(20, 20, 20)):
+        """Creates a message screen with a message that can be set optionally. Default is loading screen, but also used for win and lose screens."""
         self.game_window.fill(color_fill)
 
         font = pygame.font.SysFont("Arial", 30)
@@ -53,6 +57,7 @@ class Renderer:
         pygame.display.flip()
 
     def draw_map(self, camera_pos):
+        """Renders the tiled map"""
         tw = self.tmx_level.tilewidth
         th = self.tmx_level.tileheight
         for layer in self.tmx_level.visible_layers:

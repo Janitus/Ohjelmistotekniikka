@@ -18,4 +18,6 @@ def coverage_report(ctx):
 def format(ctx):
     ctx.run("autopep8 --in-place --recursive src")
 
-# TODO poetry run invoke lint
+@task
+def lint(ctx):
+    ctx.run("pylint src")

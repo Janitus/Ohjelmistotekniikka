@@ -1,9 +1,11 @@
+"""Handles lighting based on information in tiled maps"""
 import pygame
 import pygame.gfxdraw
 import pytmx
 
 
 class Lighting:
+    """Handles the lighting of the game map. Does not affect anything otherwise as it is purely cosmetic."""
     def __init__(self, screen_width, screen_height):
         self.screen_width = screen_width
         self.screen_height = screen_height
@@ -14,6 +16,7 @@ class Lighting:
         self.darkness_color = (128, 128, 128)
 
     def create_light_source(self, position, radius, input_color=(255, 255, 255)):
+        """Creates a light source in a fixed location"""
         r = input_color[0]
         g = input_color[1]
         b = input_color[2]
@@ -28,16 +31,19 @@ class Lighting:
         return (light, position)
 
     def add_light_source(self, position, radius, color=(255, 255, 255)):
+        """Creates a light source in a fixed location. Going to be honest, I don't remember why I have this one. Should remove it later."""
         if isinstance(color, pygame.Color):
             color = (color.r, color.g, color.b, color.a)
         self.light_sources.append(
             self.create_light_source(position, radius, color))
 
     def update_light_sources(self, new_positions):
+        """Updates the positions of the light, although as it stands all lights (barring player's light) are stationary"""
         for i, (light, _) in enumerate(self.light_sources):
             self.light_sources[i] = (light, new_positions[i])
 
     def draw(self, screen, camera_pos):
+        """Draws the lights"""
         max_dark_surface = pygame.Surface(
             (self.screen_width, self.screen_height))
         max_dark_surface.fill((255, 255, 255))
@@ -65,11 +71,13 @@ class Lighting:
                     special_flags=pygame.BLEND_RGBA_MULT)
 
     def converted_color(self, color):
+        """Converts the color from tiled color format, to match the more standard RRGGBBAA"""
         color = pygame.Color(color)
         color = (color.g, color.b, color.a, color.r)
         return color
 
     def load_lights_from_map(self, tmx_data):
+        """Loads the lights from the map file"""
         map_darkness = tmx_data.properties.get('darkness', None)
         if map_darkness is not None:
             self.darkness_color = self.converted_color(map_darkness)

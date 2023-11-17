@@ -1,9 +1,12 @@
+"""Player resides here."""
+
 import pygame
 from character import Character
 from projectile_manager import ProjectileManager
 
 
 class Player(Character):
+    """Player is the only character capable of following user input. On top of regular characters, players also contain the information for money, life, ammo, max_ammo, keys, and shot_cooldown."""
     def __init__(self, image, width=16, height=24):
         super().__init__(image, width, height)
         self.money = 0
@@ -15,13 +18,19 @@ class Player(Character):
         self.invulnerability_duration = 1000
         self.last_shot = -9999
         self.shot_cooldown = 1000
+        self.projectile_damage = 1
+
         self.jump_power = 4
         self.speed = 2
         self.gravity = 0.15
         self.health = 10
         self.max_health = 10
 
+        # The purchase mode is flipped on when a key is held down, and any pickup with a price will be attempted to be bought if within the pickup range.
+        self.purchase_mode = False
+
     def update(self, keys):
+        """Reads the user input and acts upon the instructions"""
         super().update()
         if keys[pygame.K_w] or keys[pygame.K_UP]:
             self.move_upwards()
@@ -35,8 +44,13 @@ class Player(Character):
             self.direction.x = 1
         if keys[pygame.K_LCTRL] or keys[pygame.K_RCTRL]:
             self.shoot()
+        if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
+            self.purchase_mode = True
+        else:
+            self.purchase_mode = False
 
     def shoot(self):
+        """Shoots a projectile if ammo present"""
         if self.ammo <= 0:
             return False
         if pygame.time.get_ticks() - self.last_shot < self.shot_cooldown:
@@ -49,36 +63,41 @@ class Player(Character):
             self.projectile_manager, self.center(), self.direction, "player")
         projectile.speed = 5
         projectile.knock_power = 1.2
+        projectile.damage = self.projectile_damage
         projectile.set_size(5, 2)
         projectile.set_color(255, 200, 150)
 
         return True
 
     def receive_key(self, key_name):
+        """Grants the player a key"""
         self.keys.add(key_name)
 
     def receive_ammo(self, amount):
+        """Grants the player some ammo"""
         if amount <= 0:
             return
         self.ammo += amount
         self.ammo = min(self.ammo, self.max_ammo)
 
     def receive_life(self, amount):
+        """Grants additional lives"""
         self.life += amount
 
     def receive_money(self, amount):
+        """Grants money which currently is nothing more than a score"""
         self.money += amount
 
     def purchase_item(self, price):
+        """UNUSED: Exists for future purposes to check for item prices in shops. I am leaving this in case those updates are to come ever."""
         if price > self.money:
             return False
         self.money -= price
         return True
 
-    def die(self):
-        self.dead = True
-
     def respawn(self):
+        """Respawns the player by reducing one life, healing to full and setting death to false"""
+        self.velocity_y = 0
         self.life -= 1
         self.health = self.max_health
         self.dead = False

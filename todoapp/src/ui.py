@@ -1,3 +1,4 @@
+"""User interface to render information about the player"""
 import pygame
 
 pygame.font.init()
@@ -12,10 +13,12 @@ font = pygame.font.Font(None, 22)
 
 
 class UI:
+    """User interface displaying health, ammo, money and lives of the player."""
     def __init__(self, player):
         self.player = player
 
     def draw_health_bar(self, surface):
+        """Renders health bar"""
         x = 10
         y = 10
 
@@ -33,6 +36,7 @@ class UI:
         surface.blit(text_surf, text_rect)
 
     def draw_ammo_bar(self, surface):
+        """Renders ammo bar"""
         x = 10
         y = 35
 
@@ -51,6 +55,7 @@ class UI:
         surface.blit(text_surf, text_rect)
 
     def draw_money(self, surface):
+        """Renders the amount of money"""
         x = 10
         y = 60
 
@@ -61,6 +66,7 @@ class UI:
         surface.blit(text_surf, (x, y))
 
     def draw_lives(self, surface):
+        """Renders the amount of lives"""
         x = 10
         y = 85
 
@@ -71,6 +77,7 @@ class UI:
         surface.blit(text_surf, (x, y))
 
     def draw(self, surface):
+        """Renders all"""
         self.draw_health_bar(surface)
         self.draw_ammo_bar(surface)
         self.draw_money(surface)

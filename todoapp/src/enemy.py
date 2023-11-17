@@ -1,3 +1,4 @@
+"""Enemy is a child class of Characters."""
 import os
 import pygame
 import map
@@ -8,6 +9,7 @@ enemy_templates = {}
 
 
 class Enemy(Character):
+    """Enemy is a child class of character. It also receives the methods patrol and is_facing_a_fall to prevent from walking over ledges optionally."""
     def __init__(self, image, attributes={}):
         self.attributes = attributes
         width = attributes.get('width', 16)
@@ -30,6 +32,7 @@ class Enemy(Character):
         self.dead = True
 
     def patrol(self):
+        """Patrols horizontally until a collision is detected"""
         if self.avoid_falls and self.is_facing_a_fall():
             self.direction.x *= -1
 
@@ -39,6 +42,7 @@ class Enemy(Character):
             self.direction.x *= -1
 
     def is_facing_a_fall(self):
+        """Checks whether there is a ledge ahead, if true, turn around"""
         if self.direction.x > 0 and map.get_collision_by_coordinate(self.position.y+10, self.position.x+self.speed) is True:
             return False
         if self.direction.x <= 0 and map.get_collision_by_coordinate(self.position.y+10, self.position.x-self.speed) is True:
@@ -47,6 +51,7 @@ class Enemy(Character):
 
 
 def load_enemy_types():
+    """Loads all the enemy types from assets/enemies/ directory"""
     for enemy_name in os.listdir(ENEMY_DIRECTORY):
         enemy_dir = os.path.join(ENEMY_DIRECTORY, enemy_name)
         if os.path.isdir(enemy_dir):
@@ -84,11 +89,11 @@ def load_enemy_types():
     return enemy_templates
 
 
-def fetch_enemy_templates(enemy_name):
-    return enemy_templates.get(enemy_name)
 
 
-def parse_bool(value):  # Helper function to parse booleans from file
+
+def parse_bool(value):
+    """Helper function to parse booleans from strings. If the string is "true", returns True, else return False."""
     if value.lower() == 'true':
         return True
     return False

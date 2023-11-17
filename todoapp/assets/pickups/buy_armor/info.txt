@@ -1,0 +1,2 @@
+max_health:5
+price:40

@@ -1,3 +1,4 @@
+"""Handles loading all instances of pickups, enemies, zones and actions. Also used to read for collisions and climbable locations. Can be altered runtime via destroy_blocks()"""
 import pytmx
 import pygame
 from zone import Zone, PlayerHasKeyCondition
@@ -13,6 +14,7 @@ LAYER_ENVIRONMENT = None
 
 
 def set_layers(tmx_data):
+    """Precomputes layers for later use. Right now, it's just the 'Environment' layer"""
     global LAYER_ENVIRONMENT
     for layer in tmx_data.layers:
         if layer.name == "Environment":
@@ -23,6 +25,7 @@ def set_layers(tmx_data):
 
 
 def create_collision_map(tmx_level):
+    """Creates a collision map that anything that can collide will read from"""
     global TMX_DATA
     TMX_DATA = tmx_level
     global collision_map
@@ -53,6 +56,7 @@ def create_collision_map(tmx_level):
 
 
 def create_pickup_instance(pickup_name, position):
+    """Creates a pickup instance based on the templates"""
     from pickup import pickup_templates
     from pickup import Pickup
     template = pickup_templates.get(pickup_name)
@@ -65,6 +69,7 @@ def create_pickup_instance(pickup_name, position):
 
 
 def load_pickups_from_map(tmx_data):
+    """Loads all the pickups from a map file and returns an array of instanced pickups"""
     loaded_pickups = []
     prefix = "pickup_"
     for object_group in tmx_data.objectgroups:
@@ -81,6 +86,7 @@ def load_pickups_from_map(tmx_data):
 
 
 def create_enemy_instance(enemy_name, position):
+    """Creates a new enemy and returns it based on the template"""
     from enemy import enemy_templates
     from enemy import Enemy
 
@@ -94,6 +100,7 @@ def create_enemy_instance(enemy_name, position):
 
 
 def load_enemies_from_map(tmx_data):
+    """Loads all the enemies from a map file and returns an array of instanced enemies"""
     loaded_enemies = []
     prefix = "spawn_"
 
@@ -113,6 +120,7 @@ def load_enemies_from_map(tmx_data):
 
 
 def load_zones_from_map(tmx_data, actions):
+    """Loads all the zones from a map file and returns an array of instanced zones"""
     zones = []
     prefix = "zone"
     for object_group in tmx_data.objectgroups:
@@ -147,6 +155,7 @@ def load_zones_from_map(tmx_data, actions):
 
 
 def load_actions_from_map(tmx_data):
+    """Loads all the actions from a map file and returns an array of instanced actions. Assigns IDs to them for later identification, based on the ID system in tiled."""
     actions = {}
     prefix = "action"
     for object_group in tmx_data.objectgroups:
@@ -161,16 +170,19 @@ def load_actions_from_map(tmx_data):
 
 # The coordinates sent here are per pixel positions.
 def get_collision_by_coordinate(x, y):
+    """Returns true/false based on the tile coordinate. If true, collision is present."""
     return collision_map[int(x) // TILE_SIZE][int(y) // TILE_SIZE]
 
 
 def get_ladder_by_coordinate(x, y):
+    """Returns true/false based on the ladder coordinate. If true, tile is climbable."""
     return ladder_map[int(x) // TILE_SIZE][int(y) // TILE_SIZE]
 
 # ------- Runtime map functions -------
 
 
 def destroy_block(x, y):
+    """Destroys a block in the environment based on the location."""
     pos_x = int(x // TILE_SIZE)
     pos_y = int(y // TILE_SIZE)
 

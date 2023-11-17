@@ -27,3 +27,5 @@
 ## Viikko 3
 
 - Lisättiin mahdollisuus luoda omia vihollisia, sekä ohjeet näille
+
+- Lisättiin ominaisuus pickuppeihin vaihtoehtoinen ominaisuus "price". Pelaaja voi nyt ostaa tavaroita, joidenka yllä näkyy hintalappu painamalla left tai right shiftiä.

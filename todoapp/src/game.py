@@ -1,3 +1,4 @@
+"""The main game"""
 import sys
 import os
 import pygame
@@ -57,9 +58,11 @@ CURRENT_LEVEL = None
 RENDERER = None
 LEVEL_ORDER = None
 FLAG_NEXT_LEVEL = None
+CAMPAIGN_NAME = None
 
 
 def handle_input():
+    """Reads input from user"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             return False
@@ -70,6 +73,7 @@ def handle_input():
 
 
 def load_player():
+    """Loads the player with predefined values"""
     player_image = pygame.image.load("./assets/sprites/player.png")
     player_width = 16
     player_height = 24
@@ -78,11 +82,13 @@ def load_player():
 
 
 def update_camera(camera_pos, player_pos, viewport_width, viewport_height):
+    """Updates camera location based on player position"""
     camera_pos[0] = player_pos.x - viewport_width // 2
     camera_pos[1] = player_pos.y - viewport_height // 2
 
 
 def handle_zones(zones, player):
+    """Checks whether player is within a zone."""
     global FLAG_NEXT_LEVEL
     for zone in zones:
         if zone.is_activated(player):
@@ -92,13 +98,15 @@ def handle_zones(zones, player):
 
 
 def handle_pickups(pickups, player):
+    """Checks whether player is colliding with any pickups, and absorbs them if true"""
     for pickup in pickups:
         if player.rect.colliderect(pickup.rect):
-            pickup.apply_to_player(player)
-            pickups.remove(pickup)
+            if pickup.apply_to_player(player) is True:
+                pickups.remove(pickup)
 
 
 def handle_enemies(enemies, player):
+    """Updates enemy logic, also checks for collisions between player and enemy to perform attacks. Checks for death."""
     for enemy in enemies:
         if pygame.sprite.collide_rect(player, enemy):
             if player.damage(enemy.melee_damage):
@@ -109,8 +117,10 @@ def handle_enemies(enemies, player):
             enemies.remove(enemy)
 
 
-def load_campaign(campaign_name):
-    campaign_path = "./assets/campaigns/"+campaign_name+"/order.txt"
+def load_campaign():
+    """Loads campaign based on input name"""
+    global CAMPAIGN_NAME
+    campaign_path = "./assets/campaigns/"+CAMPAIGN_NAME+"/order.txt"
     if not os.path.exists(campaign_path):
         quit("Could not find a campaign or 'Order.txt' file to fetch levels from!")
 
@@ -131,14 +141,17 @@ def load_campaign(campaign_name):
         quit(e)
 
 
+
 def get_level_tmx_file(levelname):
+    """Returns the tiled map file based on name"""
     try:
-        return load_pygame("./assets/campaigns/testCampaign/"+levelname+".tmx")
+        return load_pygame("./assets/campaigns/"+CAMPAIGN_NAME+"/"+levelname+".tmx")
     except FileNotFoundError as e:
         quit(e)
 
 
 def load_level(player, message=""):
+    """Loads a new level based on the campaign. Message is optional, and is displayed on the loading screen."""
     global TMX_LEVEL
     global PICKUPS
     global ZONES
@@ -174,11 +187,13 @@ def load_level(player, message=""):
 
 
 def main():
+    """Main function to run the game on."""
     print("Launching game!")
 
-    campaign_name = "testCampaign"
+    global CAMPAIGN_NAME
+    CAMPAIGN_NAME = "testCampaign"
     if len(sys.argv) == 2:
-        campaign_name = sys.argv[1]
+        CAMPAIGN_NAME = sys.argv[1]
 
     # --- Load templates ---
 
@@ -191,7 +206,7 @@ def main():
     global RENDERER
     global LEVEL_ORDER
 
-    LEVEL_ORDER = load_campaign(campaign_name)
+    LEVEL_ORDER = load_campaign()
     player = Player(*load_player())
     ui = UI(player)
     RENDERER = Renderer(game_surface, game_window,
@@ -271,6 +286,7 @@ def main():
 
 
 def quit(message):
+    """Standard quit. Always used, even if errors present."""
     if message != "":
         print(message)
     pygame.quit()

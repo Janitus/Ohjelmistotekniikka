@@ -1,48 +1,90 @@
+"""Manages pickups by loading them from the local files, creating templates and finally the actual pickups themselves"""
 import os
 import enum
 import pygame
 
 PICKUP_DIRECTORY = "./assets/pickups/"
 pickup_templates = {}
+font = pygame.font.Font(None, 14)
 
 
 class PickupType(enum.Enum):
+    """Enum to handle pickup types"""
     MONEY = "money"
     HEALTH = "health"
+    MAX_HEALTH = "max_health"
     LIFE = "life"
     AMMO = "ammo"
+    MAX_AMMO = "max_ammo"
+    DAMAGE = "damage"
+    SHOT_COOLDOWN = "shot_cooldown"
+    SPEED = "speed"
     KEY = "key"
+    PRICE = "price"
+
 
 
 class Pickup:
+    """An item that can be picked up for benefits."""
     def __init__(self, name, image, attributes):
         self.name = name
         self.image = image
         self.attributes = attributes
+        self.price = self.attributes.get("price", 0)
+
         self.rect = self.image.get_rect(center=(0, 0))
 
     def set_position(self, position):
+        """Sets the position of the pickup."""
         self.rect = self.image.get_rect(center=position)
 
     def draw(self, surface, camera_pos):
+        """Draws the pickup on the surface based on camera position"""
         render_pos = (self.rect.x - camera_pos[0], self.rect.y - camera_pos[1])
         surface.blit(self.image, render_pos)
 
+        if self.price > 0:
+            price_text = font.render(str(self.price)+"€", True, (255, 255, 255))
+            text_rect = price_text.get_rect(center=(self.rect.centerx - camera_pos[0], self.rect.centery - camera_pos[1] - 12))
+            surface.blit(price_text, text_rect)
+
     def apply_to_player(self, player):
+        """Applies the bonuses available in attribute list to the player. If the item has a price tag set to it, it will also require the player to have purchase_mode set as True"""
+
+        if self.price > 0:
+            if player.purchase_mode is False:
+                return False
+            elif player.purchase_item(self.price) is False:
+                return False
+
         for attr, value in self.attributes.items():
             if attr == PickupType.MONEY.value:
                 player.money += value
             elif attr == PickupType.HEALTH.value:
                 player.heal(value)
+            elif attr == PickupType.MAX_HEALTH.value:
+                player.max_health += value
             elif attr == PickupType.LIFE.value:
                 player.life += value
             elif attr == PickupType.AMMO.value:
                 player.receive_ammo(value)
+            elif attr == PickupType.MAX_AMMO.value:
+                player.max_ammo += value
+            elif attr == PickupType.SPEED.value:
+                player.speed += value
+            elif attr == PickupType.DAMAGE.value:
+                player.projectile_damage = value
+            elif attr == PickupType.SHOT_COOLDOWN.value:
+                player.shot_cooldown = value
+
             elif attr == PickupType.KEY.value:
                 player.receive_key(value)
 
+        return True
+
 
 def load_pickup_types():
+    """Loads all the pickup templates from assets/pickups/ for instantiation"""
     for pickup_name in os.listdir(PICKUP_DIRECTORY):
         pickup_dir = os.path.join(PICKUP_DIRECTORY, pickup_name)
         if os.path.isdir(pickup_dir):
@@ -65,9 +107,6 @@ def load_pickup_types():
                     pickup_name, image, attributes)
     return pickup_templates
 
-
-def fetch_pickup_templates(pickup_name):
-    return pickup_templates.get(pickup_name)
 
 
 pickup_templates = load_pickup_types()
