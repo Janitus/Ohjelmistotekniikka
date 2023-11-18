@@ -3,7 +3,7 @@ from projectile import Projectile
 
 
 class ProjectileManager():
-    """Manages all the projectiles, all three: instantiating new ones, checking for collisions and moving them."""
+    """Manages all the projectiles: instantiating, checking for collisions and movement."""
     def __init__(self, player, enemies):
         self.projectiles = []
         self.enemies = enemies

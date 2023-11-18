@@ -3,11 +3,13 @@
 import pygame
 from character import Character
 from projectile_manager import ProjectileManager
-
+# pylint: disable=no-member,c-extension-no-member
+# Pylint herjaa pygamen jokaisesta ominaisuudesta no-member, joten kytkemme sen pois
 
 class Player(Character):
-    """Player is the only character capable of following user input. On top of regular characters, players also contain the information for money, life, ammo, max_ammo, keys, and shot_cooldown."""
-    def __init__(self, image, width=16, height=24):
+    """Player is the sole character the user controls."""
+    def __init__(self,image = pygame.image.load("./assets/sprites/player.png"),
+                 width=16, height=24):
         super().__init__(image, width, height)
         self.money = 0
         self.life = 3
@@ -26,10 +28,10 @@ class Player(Character):
         self.health = 10
         self.max_health = 10
 
-        # The purchase mode is flipped on when a key is held down, and any pickup with a price will be attempted to be bought if within the pickup range.
-        self.purchase_mode = False
+        # The interactive mode is used only for buying currently
+        self.interactive_mode = False
 
-    def update(self, keys):
+    def control (self, keys):
         """Reads the user input and acts upon the instructions"""
         super().update()
         if keys[pygame.K_w] or keys[pygame.K_UP]:
@@ -45,9 +47,9 @@ class Player(Character):
         if keys[pygame.K_LCTRL] or keys[pygame.K_RCTRL]:
             self.shoot()
         if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
-            self.purchase_mode = True
+            self.interactive_mode = True
         else:
-            self.purchase_mode = False
+            self.interactive_mode = False
 
     def shoot(self):
         """Shoots a projectile if ammo present"""
@@ -59,6 +61,12 @@ class Player(Character):
         self.last_shot = pygame.time.get_ticks()
         self.ammo -= 1
 
+        self.shoot_projectile()
+
+        return True
+    
+    def shoot_projectile(self):
+        """Spwans the projectile"""
         projectile = ProjectileManager.create_projectile(
             self.projectile_manager, self.center(), self.direction, "player")
         projectile.speed = 5
@@ -66,8 +74,6 @@ class Player(Character):
         projectile.damage = self.projectile_damage
         projectile.set_size(5, 2)
         projectile.set_color(255, 200, 150)
-
-        return True
 
     def receive_key(self, key_name):
         """Grants the player a key"""
@@ -89,7 +95,7 @@ class Player(Character):
         self.money += amount
 
     def purchase_item(self, price):
-        """UNUSED: Exists for future purposes to check for item prices in shops. I am leaving this in case those updates are to come ever."""
+        """Checks whether enough money for purchase."""
         if price > self.money:
             return False
         self.money -= price

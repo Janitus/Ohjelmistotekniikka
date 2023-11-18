@@ -1,7 +1,7 @@
 """Enemy is a child class of Characters."""
 import os
 import pygame
-import map
+from map import get_collision_by_coordinate as get_collision
 from character import Character
 
 ENEMY_DIRECTORY = "./assets/enemies/"
@@ -9,7 +9,7 @@ enemy_templates = {}
 
 
 class Enemy(Character):
-    """Enemy is a child class of character. It also receives the methods patrol and is_facing_a_fall to prevent from walking over ledges optionally."""
+    """Enemy is a child class of character."""
     def __init__(self, image, attributes={}):
         self.attributes = attributes
         width = attributes.get('width', 16)
@@ -43,9 +43,11 @@ class Enemy(Character):
 
     def is_facing_a_fall(self):
         """Checks whether there is a ledge ahead, if true, turn around"""
-        if self.direction.x > 0 and map.get_collision_by_coordinate(self.position.y+10, self.position.x+self.speed) is True:
+        if self.direction.x > 0 and get_collision(self.position.y+10,
+                                                  self.position.x+self.speed) is True:
             return False
-        if self.direction.x <= 0 and map.get_collision_by_coordinate(self.position.y+10, self.position.x-self.speed) is True:
+        if self.direction.x <= 0 and get_collision(self.position.y+10,
+                                                   self.position.x-self.speed) is True:
             return False
         return True
 
@@ -61,7 +63,7 @@ def load_enemy_types():
                 image = pygame.image.load(image_path)
                 attributes = {}
 
-                with open(info_path, 'r') as f:
+                with open(info_path, 'r', encoding='utf-8') as f:
                     for line in f:
                         if ':' in line:
                             key, value = line.strip().split(':', 1)
@@ -93,7 +95,7 @@ def load_enemy_types():
 
 
 def parse_bool(value):
-    """Helper function to parse booleans from strings. If the string is "true", returns True, else return False."""
+    """Helper function to parse booleans from strings."""
     if value.lower() == 'true':
         return True
     return False

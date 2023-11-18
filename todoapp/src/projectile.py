@@ -2,9 +2,9 @@
 import pygame
 import map
 
-
+# pylint: disable=no-member,c-extension-no-member
 class Projectile(pygame.sprite.Sprite):
-    """Projectiles exist in real space and can collide with either their targets or the map. If target is hit, applies damage and knock_power to them."""
+    """Projectiles exist in world space and can collide with either their targets or the map."""
     def __init__(self, pos, direction, source):
         super().__init__()
         self.source = source

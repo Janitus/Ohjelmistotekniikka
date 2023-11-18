@@ -1,6 +1,6 @@
 """Zone contains Zone, conditions and all the child types of conditions"""
 class Zone:
-    """Zones are used to check whether a player is within it and whether they fulfill some other optional conditions given to them"""
+    """Zones are used to check for conditions. Default: Player inside."""
     def __init__(self, rect, additional_conditions, actions=[]):
         self.rect = rect
         self.conditions = [PlayerTouchingCondition(rect)]
@@ -8,7 +8,7 @@ class Zone:
         if additional_conditions:
             self.conditions.extend(additional_conditions)
 
-    def is_activated(self, player):
+    def can_be_activated(self, player):
         """Check for conditions"""
         for condition in self.conditions:
             if not condition.check(player):
@@ -16,7 +16,7 @@ class Zone:
         return True
 
     def activate(self):
-        """Is active, execute any actions it contains, also receive any messages from them and pass them to main gameloop."""
+        """Execute any actions it contains, also receive any potential messages from them."""
         messages = []
         for action in self.actions:
             messages = action.execute()
@@ -42,7 +42,7 @@ class PlayerTouchingCondition(Condition):
 
 
 class PlayerHasKeyCondition(Condition):
-    """Condition renders true if player has the right key. Compares all the keys player has to the key this condition requires in it's constructor."""
+    """Condition return true if player has the right key."""
     def __init__(self, required_key):
         self.required_key = required_key
 

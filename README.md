@@ -57,4 +57,16 @@ Testikomennot voi suorittaa /todoapp sisällä:
 
 - poetry run invoke coverage-report
 
-- poetry run invoke lint
+- poetry run invoke lint, Huom koodissa on käytetty disable=no-member,c-extension-no-member, sillä nämä herjaavat jokaisesta pygamen ominaisuuksista no-member erroreita, vaikka koodi toimii muuten.
+
+# Testitulokset
+
+--- Lint ---
+
+Your code has been rated at 9.71/10 (previous run: 9.71/10, +0.00)
+
+--- Coverage ---
+
+Name                        Stmts   Miss Branch BrPart  Cover
+
+TOTAL                         912    261    328     21    70%

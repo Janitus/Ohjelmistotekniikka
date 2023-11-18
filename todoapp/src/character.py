@@ -3,6 +3,7 @@ import pygame
 from map import get_collision_by_coordinate
 from map import get_ladder_by_coordinate
 
+# pylint: disable=no-member,c-extension-no-member
 
 class Character(pygame.sprite.Sprite):
     """Character is the parent class used for either enemies or players. Not to be used as is"""
@@ -39,7 +40,7 @@ class Character(pygame.sprite.Sprite):
         self.dead = False
 
     def damage(self, amount):
-        """Damage reduces health and checks whether health reaches 0 to start death. Invulnerability period may exist after being hit."""
+        """Damage reduces health, while also starting an invulnerability period"""
         if amount <= 0:
             return False
         if pygame.time.get_ticks() - self.last_hit < self.invulnerability_duration:
@@ -66,7 +67,7 @@ class Character(pygame.sprite.Sprite):
         self.health = min(self.health, self.max_health)
 
     def knock_up(self, amount):
-        """Sends the character flying based on the amount. Different from jumping as jumping requires floor for launching yourself."""
+        """Sends the character flying based on the amount."""
         self.velocity_y = -amount
 
     def apply_gravity(self):
@@ -90,7 +91,7 @@ class Character(pygame.sprite.Sprite):
         self.rect.center = self.position
 
     def can_climb(self):
-        """Character climbs when they detect a ladder in their position in the map's "Ladder" layer"""
+        """Character can climb when they detect a ladder in their position"""
         if get_ladder_by_coordinate(self.position.y, self.position.x):
             return True
         return False
@@ -156,13 +157,11 @@ class Character(pygame.sprite.Sprite):
 
         new_x = int(self.position[0] + dx + horizontal)
         new_y = int(self.position[1] + dy + vertical)
-
-        # print("pos",self.position," dest",tile, horizontal, vertical)
-
+        
         if get_collision_by_coordinate(new_y, new_x):
             return True
         return False
 
     def get_rect(self):
         """Returns hitbox"""
-        return pygame.Rect(self.position.x, self.position.y, self.width, self.height)
+        return pygame.Rect(self.center()[0], self.center()[1], self.width, self.height)

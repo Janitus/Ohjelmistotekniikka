@@ -2,10 +2,11 @@
 import pygame
 import pygame.gfxdraw
 import pytmx
-
+# pylint: disable=no-member,c-extension-no-member
+# Pylint herjaa pygamen jokaisesta ominaisuudesta no-member, joten kytkemme sen pois
 
 class Lighting:
-    """Handles the lighting of the game map. Does not affect anything otherwise as it is purely cosmetic."""
+    """Handles the lighting of the game map."""
     def __init__(self, screen_width, screen_height):
         self.screen_width = screen_width
         self.screen_height = screen_height
@@ -31,14 +32,14 @@ class Lighting:
         return (light, position)
 
     def add_light_source(self, position, radius, color=(255, 255, 255)):
-        """Creates a light source in a fixed location. Going to be honest, I don't remember why I have this one. Should remove it later."""
+        """Creates a light source in a fixed location."""
         if isinstance(color, pygame.Color):
             color = (color.r, color.g, color.b, color.a)
         self.light_sources.append(
             self.create_light_source(position, radius, color))
 
     def update_light_sources(self, new_positions):
-        """Updates the positions of the light, although as it stands all lights (barring player's light) are stationary"""
+        """Updates the positions of the light"""
         for i, (light, _) in enumerate(self.light_sources):
             self.light_sources[i] = (light, new_positions[i])
 
@@ -84,10 +85,13 @@ class Lighting:
 
         for layer in tmx_data.layers:
             if isinstance(layer, pytmx.TiledObjectGroup):
-                for obj in layer:
-                    if obj.name == "light":
-                        posx, posy = obj.x, obj.y
-                        radius = int(obj.properties.get("radius", 100))
-                        color = obj.properties.get("color", "#ffffff")
-                        self.add_light_source(
-                            (posx, posy), radius, self.converted_color(color))
+                self.create_light_instance_if_valid(layer)
+
+    def create_light_instance_if_valid(self, layer):
+        for obj in layer:
+            if obj.name == "light":
+                posx, posy = obj.x, obj.y
+                radius = int(obj.properties.get("radius", 100))
+                color = obj.properties.get("color", "#ffffff")
+                self.add_light_source(
+                    (posx, posy), radius, self.converted_color(color))

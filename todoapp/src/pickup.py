@@ -1,7 +1,11 @@
-"""Manages pickups by loading them from the local files, creating templates and finally the actual pickups themselves"""
+"""Pickups are items a player can pick up to empower themselves"""
 import os
 import enum
 import pygame
+
+# pylint: disable=no-member,c-extension-no-member
+pygame.init()
+pygame.font.init()
 
 PICKUP_DIRECTORY = "./assets/pickups/"
 pickup_templates = {}
@@ -45,16 +49,17 @@ class Pickup:
 
         if self.price > 0:
             price_text = font.render(str(self.price)+"€", True, (255, 255, 255))
-            text_rect = price_text.get_rect(center=(self.rect.centerx - camera_pos[0], self.rect.centery - camera_pos[1] - 12))
+            text_rect = price_text.get_rect(center=(self.rect.centerx - camera_pos[0],
+                                                    self.rect.centery - camera_pos[1] - 12))
             surface.blit(price_text, text_rect)
 
     def apply_to_player(self, player):
-        """Applies the bonuses available in attribute list to the player. If the item has a price tag set to it, it will also require the player to have purchase_mode set as True"""
+        """Applies the bonuses available in attribute list to the player, excluding "price"."""
 
         if self.price > 0:
-            if player.purchase_mode is False:
+            if player.interactive_mode is False:
                 return False
-            elif player.purchase_item(self.price) is False:
+            if player.purchase_item(self.price) is False:
                 return False
 
         for attr, value in self.attributes.items():
@@ -92,7 +97,7 @@ def load_pickup_types():
             image_path = os.path.join(pickup_dir, "image.png")
             if os.path.isfile(info_path) and os.path.isfile(image_path):
                 # Generated
-                with open(info_path, 'r') as f:
+                with open(info_path, 'r', encoding='utf-8') as f:
                     attributes = {}
                     for line in f:
                         if ':' in line:

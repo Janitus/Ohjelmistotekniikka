@@ -5,12 +5,16 @@ import pygame
 from pytmx.util_pygame import load_pygame
 from player import Player
 from enemy import load_enemy_types
-from ui import UI
+from ui.ui import UI
 from lighting import Lighting
 from renderer import Renderer
 from pickup import load_pickup_types
 import map
 from projectile_manager import ProjectileManager
+from gamestate import GameState
+
+# pylint: disable=no-member,c-extension-no-member
+# Pylint herjaa pygamen jokaisesta ominaisuudesta no-member, joten kytkemme sen pois
 
 pygame.init()
 pygame.display.set_caption("Placeholder Name")
@@ -27,8 +31,7 @@ game_window = pygame.display.set_mode(game_resolution)  # Windowed
 game_surface = pygame.Surface(game_resolution)
 
 ZOOM_AMOUNT = 2
-zoomed_resolution = (
-    game_resolution[0] * ZOOM_AMOUNT, game_resolution[1] * ZOOM_AMOUNT)
+zoomed_resolution = (game_resolution[0] * ZOOM_AMOUNT, game_resolution[1] * ZOOM_AMOUNT)
 
 # ------------------------------------------
 # ---------------- Set Rate ----------------
@@ -43,23 +46,6 @@ CLOCK_RATE = 60
 
 image_tileset = pygame.image.load("./assets/images/tileset.png")
 
-# -------------------------------------------
-# -------------- Other stuff  ---------------
-# -------------------------------------------
-
-
-TMX_LEVEL = None
-PICKUPS = None
-ZONES = None
-ENEMIES = None
-PROJECTILE_MANAGER = None
-LIGHTING = None
-CURRENT_LEVEL = None
-RENDERER = None
-LEVEL_ORDER = None
-FLAG_NEXT_LEVEL = None
-CAMPAIGN_NAME = None
-
 
 def handle_input():
     """Reads input from user"""
@@ -71,221 +57,181 @@ def handle_input():
                 return False
     return True
 
-
-def load_player():
-    """Loads the player with predefined values"""
-    player_image = pygame.image.load("./assets/sprites/player.png")
-    player_width = 16
-    player_height = 24
-
-    return player_image, player_width, player_height
-
-
 def update_camera(camera_pos, player_pos, viewport_width, viewport_height):
     """Updates camera location based on player position"""
     camera_pos[0] = player_pos.x - viewport_width // 2
     camera_pos[1] = player_pos.y - viewport_height // 2
 
-
-def handle_zones(zones, player):
+def handle_zones(game_state):
     """Checks whether player is within a zone."""
-    global FLAG_NEXT_LEVEL
-    for zone in zones:
-        if zone.is_activated(player):
+    for zone in game_state.zones:
+        if zone.can_be_activated(game_state.player):
             messages = zone.activate()
             if isinstance(messages, str) and "exit" in messages:
-                FLAG_NEXT_LEVEL = True
+                game_state.flag_next_level = True
 
-
-def handle_pickups(pickups, player):
+def handle_pickups(game_state):
     """Checks whether player is colliding with any pickups, and absorbs them if true"""
-    for pickup in pickups:
-        if player.rect.colliderect(pickup.rect):
-            if pickup.apply_to_player(player) is True:
-                pickups.remove(pickup)
+    for pickup in game_state.pickups:
+        if game_state.player.rect.colliderect(pickup.rect):
+            if pickup.apply_to_player(game_state.player) is True:
+                game_state.pickups.remove(pickup)
 
-
-def handle_enemies(enemies, player):
-    """Updates enemy logic, also checks for collisions between player and enemy to perform attacks. Checks for death."""
-    for enemy in enemies:
-        if pygame.sprite.collide_rect(player, enemy):
-            if player.damage(enemy.melee_damage):
-                player.knock_up(enemy.melee_knock)
+def handle_enemies(game_state):
+    """Updates enemy logic."""
+    for enemy in game_state.enemies:
+        if pygame.sprite.collide_rect(game_state.player, enemy):
+            if game_state.player.damage(enemy.melee_damage):
+                game_state.player.knock_up(enemy.melee_knock)
 
         enemy.update()
         if enemy.dead:
-            enemies.remove(enemy)
+            game_state.enemies.remove(enemy)
 
+def handle_next_level_flag(game_state):
+    if game_state.flag_next_level:
+        game_state.current_level += 1
+        if game_state.current_level > len(game_state.level_order)-1:
+            print("YOU WIN")
+            game_state.renderer.draw_message_screen("You win!", (20, 100, 20))
+            pygame.time.delay(2000)
+            handle_quit()
+        else:
+            game_state.player.keys = set()
+            load_level(game_state, "Loading next level")
+            print("entering level", game_state.current_level)
+        game_state.flag_next_level = False
+        return True
+    else:
+        return False
 
-def load_campaign():
+def handle_player_status(game_state):
+    if game_state.player.dead:
+        if game_state.player.life > 0:
+            load_level(game_state, f"You have died! Lives left {game_state.player.life}")
+            pygame.time.delay(1000)
+            game_state.player.respawn()
+        else:
+            game_state.renderer.draw_message_screen("You lose!", (50, 20, 20))
+            pygame.time.delay(2000)
+            handle_quit()
+
+    keys = pygame.key.get_pressed()
+    game_state.player.control(keys)
+
+    if keys[pygame.K_F9]:
+        game_state.flag_next_level = True  # Secret cheat button
+        pygame.time.delay(100)
+
+    return True
+
+def load_campaign(game_state : GameState):
     """Loads campaign based on input name"""
-    global CAMPAIGN_NAME
-    campaign_path = "./assets/campaigns/"+CAMPAIGN_NAME+"/order.txt"
+    campaign_path = "./assets/campaigns/"+game_state.campaign_name+"/order.txt"
     if not os.path.exists(campaign_path):
-        quit("Could not find a campaign or 'Order.txt' file to fetch levels from!")
+        handle_quit("Could not find a campaign or 'Order.txt' file to fetch levels from!")
 
     level_order = []
 
     try:
         # Generated
-        with open(campaign_path, 'r') as file:
+        with open(campaign_path, 'r', encoding='utf-8') as file:
             for line in file:
                 level_line = line.strip()
                 level_order.append(level_line)
         # End generation
         if len(level_order) == 0:
-            quit("No levels found within the campaign!")
+            handle_quit("No levels found within the campaign!")
 
         return level_order
     except FileNotFoundError as e:
-        quit(e)
+        handle_quit(e)
+        return False
 
-
-
-def get_level_tmx_file(levelname):
+def get_level_tmx_file(levelname, game_state):
     """Returns the tiled map file based on name"""
     try:
-        return load_pygame("./assets/campaigns/"+CAMPAIGN_NAME+"/"+levelname+".tmx")
+        return load_pygame("./assets/campaigns/"+game_state.campaign_name+"/"+levelname+".tmx")
     except FileNotFoundError as e:
-        quit(e)
+        handle_quit(e)
+        return False
 
 
-def load_level(player, message=""):
-    """Loads a new level based on the campaign. Message is optional, and is displayed on the loading screen."""
-    global TMX_LEVEL
-    global PICKUPS
-    global ZONES
-    global ENEMIES
-    global PROJECTILE_MANAGER
-    global LIGHTING
+def load_level(game_state, message=""):
+    """Loads a new level based on the campaign. Screen message is optional."""
 
     try:
-        RENDERER.draw_message_screen(message)
+        game_state.renderer.draw_message_screen(message)
         # --- Map data ---
-        TMX_LEVEL = get_level_tmx_file(LEVEL_ORDER[CURRENT_LEVEL])
-        map.set_layers(TMX_LEVEL)
-        map.create_collision_map(TMX_LEVEL)
-        PICKUPS = map.load_pickups_from_map(TMX_LEVEL)
-        actions = map.load_actions_from_map(TMX_LEVEL)
-        ZONES = map.load_zones_from_map(TMX_LEVEL, actions)
-        ENEMIES = map.load_enemies_from_map(TMX_LEVEL)
-        LIGHTING = Lighting(WINDOW_WIDTH, WINDOW_HEIGHT)
-        LIGHTING.load_lights_from_map(TMX_LEVEL)
-
-        # --- Managers ---
-        PROJECTILE_MANAGER = ProjectileManager(player, ENEMIES)
+        game_state.tmx_level = get_level_tmx_file(game_state.level_order[game_state.current_level],
+                                                  game_state)
+        map.set_layers(game_state.tmx_level)
+        map.create_collision_map(game_state.tmx_level)
+        game_state.pickups = map.load_pickups_from_map(game_state.tmx_level)
+        actions = map.load_actions_from_map(game_state.tmx_level)
+        game_state.zones = map.load_zones_from_map(game_state.tmx_level, actions)
+        game_state.enemies = map.load_enemies_from_map(game_state.tmx_level)
+        game_state.lighting = Lighting(WINDOW_WIDTH, WINDOW_HEIGHT)
+        game_state.lighting.load_lights_from_map(game_state.tmx_level)
+        game_state.projectile_manager = ProjectileManager(game_state.player, game_state.enemies)
 
         # --- Allocations ---
-        spawn_point = TMX_LEVEL.get_object_by_name("spawn_player")
-        player.projectile_manager = PROJECTILE_MANAGER
-        player.position = pygame.math.Vector2(spawn_point.x, spawn_point.y)
-        for enemy in ENEMIES:
-            enemy.projectile_manager = PROJECTILE_MANAGER
-        RENDERER.tmx_level = TMX_LEVEL
+        spawn_point = game_state.tmx_level.get_object_by_name("spawn_player")
+        game_state.player.projectile_manager = game_state.projectile_manager
+        game_state.player.position = pygame.math.Vector2(spawn_point.x, spawn_point.y)
+        for enemy in game_state.enemies:
+            enemy.projectile_manager = game_state.projectile_manager
     except ValueError as e:
-        quit(e)
+        handle_quit(e)
 
 
 def main():
-    """Main function to run the game on."""
+    """Main to run the game on."""
     print("Launching game!")
-
-    global CAMPAIGN_NAME
-    CAMPAIGN_NAME = "testCampaign"
-    if len(sys.argv) == 2:
-        CAMPAIGN_NAME = sys.argv[1]
-
-    # --- Load templates ---
 
     load_pickup_types()
     load_enemy_types()
 
-    # --- Load permanent ---
+    game_state = GameState()
+    game_state.campaign_name = "testCampaign"
+    if len(sys.argv) == 2:
+        game_state.campaign_name = sys.argv[1]
 
     camera_pos = [100, 100]
-    global RENDERER
-    global LEVEL_ORDER
 
-    LEVEL_ORDER = load_campaign()
-    player = Player(*load_player())
-    ui = UI(player)
-    RENDERER = Renderer(game_surface, game_window,
+    game_state.level_order = load_campaign(game_state)
+    game_state.player = Player()
+    ui = UI(game_state.player)
+    game_state.renderer = Renderer(game_surface, game_window,
                         game_resolution, zoomed_resolution)
-    RENDERER.zoom_amount = 2
+    game_state.renderer.zoom_amount = 2
+    game_state.renderer.game_state = game_state
+    game_state.current_level = 0
 
-    # --- Load temporal ---
-
-    global TMX_LEVEL
-    global FLAG_NEXT_LEVEL  # Used to flag when next level should be loaded
-    global PICKUPS
-    global ZONES
-    global ENEMIES
-    global PROJECTILE_MANAGER
-    global LIGHTING
-    global CURRENT_LEVEL
-
-    TMX_LEVEL = None
-    FLAG_NEXT_LEVEL = False
-    PICKUPS = None
-    ZONES = None
-    ENEMIES = None
-    PROJECTILE_MANAGER = None
-    LIGHTING = None
-    CURRENT_LEVEL = 0
-
-    load_level(player, "Entering first level")
+    load_level(game_state, "Entering first level")
 
     # --- Game loop ---
 
     running = True
     while running:
         clock.tick(CLOCK_RATE)
-        if FLAG_NEXT_LEVEL:
-            CURRENT_LEVEL += 1
-            if CURRENT_LEVEL > len(LEVEL_ORDER)-1:
-                print("YOU WIN")
-                RENDERER.draw_message_screen("You win!", (20, 100, 20))
-                pygame.time.delay(2000)
 
-                break
-            else:
-                load_level(player, "Loading next level")
-                print("entering level", CURRENT_LEVEL)
-            FLAG_NEXT_LEVEL = False
-
-        if player.dead:
-            if player.life > 0:
-                load_level(player, f"You have died! Lives left {player.life}")
-                pygame.time.delay(1000)
-                player.respawn()
-            else:
-                RENDERER.draw_message_screen("You lose!", (50, 20, 20))
-                pygame.time.delay(2000)
-                break
-
-        keys = pygame.key.get_pressed()
-        player.update(keys)
-
-        if keys[pygame.K_F9]:
-            FLAG_NEXT_LEVEL = True  # Secret cheat button
-            pygame.time.delay(100)
-
-        handle_enemies(ENEMIES, player)
-        handle_pickups(PICKUPS, player)
-        handle_zones(ZONES, player)
-        update_camera(camera_pos, player.position,
+        handle_next_level_flag(game_state)
+        handle_player_status(game_state)
+        handle_enemies(game_state)
+        handle_pickups(game_state)
+        handle_zones(game_state)
+        update_camera(camera_pos, game_state.player.position,
                       game_resolution[0], game_resolution[1])
 
-        PROJECTILE_MANAGER.update()
-
+        game_state.projectile_manager.update()
         running = handle_input()
-        RENDERER.handle_rendering(
-            player, ui, LIGHTING, camera_pos, PICKUPS, ENEMIES, PROJECTILE_MANAGER)
+        game_state.renderer.handle_rendering(ui, camera_pos)
 
-    quit("Exiting game!")
+    handle_quit("Exiting game!")
 
 
-def quit(message):
+def handle_quit(message = ""):
     """Standard quit. Always used, even if errors present."""
     if message != "":
         print(message)

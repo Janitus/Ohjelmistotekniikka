@@ -12,7 +12,6 @@ Tavaroihin liittyen, pelaaja aloittaa pelin käsiaseella, sekä vähillä määr
 
 - Lisää elämiä
 - Lisää luoteja
-- Gadgetteja (Kuten pommit, soihdut, ym)
 - Parempia aseita, joissa ovat omat statsinsa.
 - Suojia
 - Mahdollisesti jotain muutakin.
@@ -21,20 +20,17 @@ Kenttien haasteet tulevat muodoissa:
 
 - Viholliset
 - Ansat
-- Mahdollisia palapelejä
-- Mahdollisia muita uhkia
 
-Kenttien luonti tapahtuu "Tiled" Editoria käyttäen, joissa luodaan tiedot kentälle, jotka sitten ladataan itse peliin.
-
-Tavoitteena on myös luoda peliin seuraavia hyödyllisiä ominaisuuksia:
-
-- Tilastot
-- Kampanjasysteemi (Kampanjasysteemin tarkoitus on sallia pelaajien luoda omat kampanjat omilla kentillään, sekä ohjeet näiden luomiselle)
-- Tallennus/Lataus
+Kenttien luonti tapahtuu "Tiled" Editoria käyttäen, joissa luodaan tiedot kentälle, jotka sitten ladataan itse peliin. Kentillä muodostetaan suurempia kampanjoita, joita voi myös käyttäjä luoda.
 
 
 TODO lista:
 
+- Invoketoiminnot
+    - DONE: Start (Sekä lisäargumentti jolla vaihtaa kampanja)
+    - DONE: Lint
+    - DONE: Coverage
+    - DONE: Test
 - Tiedostojärjestelmä
     - DONE: Kykenee ottamaan tiledillä luodut tiedot ja muuntamaan sen datan pelille soveltuvaksi
     - DONE: Kykenee lukemaan käyttäjien luomat viholliset
@@ -55,33 +51,26 @@ TODO lista:
     - DONE: Damage & Heal systeemi
     - DONE: Tavaroiden ostojärjestelmä
 - Lisää dokumentaatiota.
-    - Luokkakaavio
     - DONE: Sekvenssikaavio
     - DONE: Työaikakirjaus
     - DONE: Peliohjeet
     - DONE: Ohjeistus kenttien ja kampanjoiden luomiselle ym. Mahdollisia video tai kuva-ohjeita tulossa mikäli tarvitaan
 - Testit
-    - DONE: Pelaajatestit
-    - DONE: Pickuptestit
-    - DONE: Pylint
-    - PROGRESS: Coverage (Ei vielä vaadittu 70%)
-    - Vihollistestit
-    - Pelitestit
-    - Jotain muita testejä
+    - DONE: Pylint (Ongelmia toki löytyy vielä)
+    - DONE: Coverage (70%)
+
 
 
 Parannusideoita:
 
 - Viholliset, jotka kykenevät itse ampumaan projektiileja
-- Kauppa, mistä ostaa tavaroita.
 - Äänet sekä näille systeemi, miten luoda lisää nopeasti jatkossa assets/sounds/in sisälle
 - Animaatiot
 - Paremmat collisionit
 - Muitakin toiminnallisuuksia, kuten pommit ym
 - Enemmän zoneja/actioneja (esim. spawn action)
 - Main menu
-- Tilastonäkymä
+- Tilastonäkymä, sekä itse tilastot
 - Sotkuiset importit (Mutta näitä nyt ei oikeasti kukaan enään tästä frankensteinista ole korjaamassa)
-
-
-
+- Projektiileille omat templatet (samanlain kuin vihollisille ja pickupeille luotu, jotta saisi paremmin luotua lisää)
+- Varmaan noin 50% koodista on silkkaa pahuutta, jonka voisi lakaista maton alle. Luudalle tarvetta.

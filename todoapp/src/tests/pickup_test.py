@@ -8,7 +8,7 @@ from pickup import Pickup, load_pickup_types
 class TestPlayer(unittest.TestCase):
     def setUp(self):
         self.pickups = load_pickup_types()
-        self.player = player.Player(*game.load_player())
+        self.player = player.Player()
 
     def test_loading_from_file_gets_templates(self):
         self.assertGreater(len(self.pickups), 0)
@@ -93,21 +93,21 @@ class TestPlayer(unittest.TestCase):
     def test_pickup_can_be_bought_with_money (self):
         purchaseable_pickup = self.create_pickup({'price': 10})
         self.player.money = 15
-        self.player.purchase_mode = True
+        self.player.interactive_mode = True
         purchaseable_pickup.apply_to_player(self.player)
         self.assertEqual(self.player.money, 5)
 
     def test_pickup_can_not_be_bought_with_insufficient_money (self):
         purchaseable_pickup = self.create_pickup({'price': 10})
         self.player.money = 5
-        self.player.purchase_mode = True
+        self.player.interactive_mode = True
         purchaseable_pickup.apply_to_player(self.player)
         self.assertEqual(self.player.money, 5)
 
     def test_pickup_is_not_bought_when_purchase_mode_is_false (self):
         purchaseable_pickup = self.create_pickup({'price': 10})
         self.player.money = 15
-        self.player.purchase_mode = False
+        self.player.interactive_mode = False
         purchaseable_pickup.apply_to_player(self.player)
         self.assertEqual(self.player.money, 15)
 

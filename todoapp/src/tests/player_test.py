@@ -1,12 +1,13 @@
 import unittest
-import player
-import game
 import pygame
-
+import player
+import character
+from unittest.mock import patch
+from projectile_manager import ProjectileManager
 
 class TestPlayer(unittest.TestCase):
     def setUp(self):
-        self.player = player.Player(*game.load_player())
+        self.player = player.Player()
         self.player.health = 10
         self.player.max_health = 10
         self.player.max_ammo = 4
@@ -16,6 +17,7 @@ class TestPlayer(unittest.TestCase):
         self.player.money = 50
         self.player.life = 3
         self.player.speed = 3
+        self.key = self.get_all_false_keys()
 
     # Health
 
@@ -91,30 +93,38 @@ class TestPlayer(unittest.TestCase):
         self.player.receive_ammo(10)
         self.assertEqual(self.player.ammo, 4)
 
-    # Disabled as the system is now dependant on projectile systems. Will remake once the projectile tests are in!
-    # def test_shooting_with_ammo(self):
-    #    self.assertTrue(self.player.shoot())
-    #    self.assertEqual(self.player.ammo, 0)
-#
-    # def test_shooting_without(self):
-    #    self.player.ammo = 0
-    #    self.assertFalse(self.player.shoot())
-    #    self.assertEqual(self.player.ammo, 0)
-#
-    # def test_shooting_too_fast(self):
-    #    self.player.shot_cooldown = 100
-    #    self.player.ammo = 2
-    #    self.assertTrue(self.player.shoot())
-    #    pygame.time.delay(50)
-    #    self.assertFalse(self.player.shoot())
-    #
-#
-    # def test_shooting_on_time(self):
-    #    self.player.shot_cooldown = 100
-    #    self.player.ammo = 2
-    #    self.assertTrue(self.player.shoot())
-    #    pygame.time.delay(150)
-    #    self.assertTrue(self.player.shoot())
+    # Shooting
+
+    @patch('player.Player.shoot_projectile')
+    def test_shooting_with_ammo(self, mock_projectile):
+        mock_projectile.return_value = None
+        self.assertTrue(self.player.shoot())
+        self.assertEqual(self.player.ammo, 0)
+
+    @patch('player.Player.shoot_projectile')
+    def test_shooting_without(self, mock_projectile):
+        mock_projectile.return_value = None
+        self.player.ammo = 0
+        self.assertFalse(self.player.shoot())
+        self.assertEqual(self.player.ammo, 0)
+
+    @patch('player.Player.shoot_projectile')
+    def test_shooting_too_fast(self, mock_projectile):
+        mock_projectile.return_value = None
+        self.player.shot_cooldown = 100
+        self.player.ammo = 2
+        self.assertTrue(self.player.shoot())
+        pygame.time.delay(50)
+        self.assertFalse(self.player.shoot())
+ 
+    @patch('player.Player.shoot_projectile')
+    def test_shooting_on_time(self, mock_projectile):
+        mock_projectile.return_value = None
+        self.player.shot_cooldown = 100
+        self.player.ammo = 2
+        self.assertTrue(self.player.shoot())
+        pygame.time.delay(150)
+        self.assertTrue(self.player.shoot())
 
     # Size
 
@@ -164,3 +174,78 @@ class TestPlayer(unittest.TestCase):
 
     def test_speed(self):
         self.assertEqual(self.player.speed, 3)
+
+    # Input
+
+    # This weird looking helper function exists because I found no other way to mock inputs
+    # If I don't explicitly set everything as false, entering the control function will cause issues
+    def get_all_false_keys(self):
+        return {
+            pygame.K_w: False,
+            pygame.K_UP: False,
+            pygame.K_s: False,
+            pygame.K_DOWN: False,
+            pygame.K_a: False,
+            pygame.K_LEFT: False,
+            pygame.K_d: False,
+            pygame.K_RIGHT: False,
+            pygame.K_LCTRL: False,
+            pygame.K_RCTRL: False,
+            pygame.K_LSHIFT: False,
+            pygame.K_RSHIFT: False
+        }
+
+    @patch('pygame.key.get_pressed')
+    @patch('player.Player.move_upwards')
+    def test_up_key(self, mock_up, mock_key):
+        self.key[pygame.K_w] = True
+        mock_key.return_value = self.key
+        mock_up.return_value = None
+        self.player.control(mock_key.return_value)
+        mock_up.assert_called_once() # https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock.assert_called_once
+
+    @patch('pygame.key.get_pressed')
+    @patch('player.Player.move_downwards')
+    def test_down_key(self, mock_down, mock_key):
+        self.key[pygame.K_s] = True
+        mock_key.return_value = self.key
+        mock_down.return_value = None
+        self.player.control(mock_key.return_value)
+        mock_down.assert_called_once()
+
+    @patch('pygame.key.get_pressed')
+    @patch('player.Player.move')
+    def test_left_key(self, mock_move, mock_key):
+        self.key[pygame.K_a] = True
+        mock_key.return_value = self.key
+        mock_move.return_value = None
+        self.player.direction.x = 0
+        self.player.control(mock_key.return_value)
+        self.assertAlmostEqual(self.player.direction.x,-1)
+
+    @patch('pygame.key.get_pressed')
+    @patch('player.Player.move')
+    def test_right_key(self, mock_move, mock_key):
+        self.key[pygame.K_d] = True
+        mock_key.return_value = self.key
+        mock_move.return_value = None
+        self.player.direction.x = 0
+        self.player.control(mock_key.return_value)
+        self.assertAlmostEqual(self.player.direction.x,1)
+
+    @patch('pygame.key.get_pressed')
+    @patch('player.Player.shoot')
+    def test_shoot_key(self, mock_shoot, mock_key):
+        self.key[pygame.K_LCTRL] = True
+        mock_key.return_value = self.key
+        mock_shoot.return_value = None
+        self.player.control(mock_key.return_value)
+        mock_shoot.assert_called_once()
+
+    @patch('pygame.key.get_pressed')
+    def test_interact_key(self, mock_key):
+        self.key[pygame.K_LSHIFT] = True
+        mock_key.return_value = self.key
+        self.player.interactive_mode = False
+        self.player.control(mock_key.return_value)
+        self.assertTrue(self.player.interactive_mode)
