@@ -8,7 +8,7 @@ Projekti on pienimuotoinen aarretasohyppely. Pelaajan tehtävänä on päästä 
 
 Projekti on suunniteltu pohjaksi kokonaiselle pelille, jota voidaan laajentaa, sekä sisällytän myös ohjeita, kuinka osan tästä työstä voi tehdä.
 
-![Thumbnail](https://i.gyazo.com/2e31017da040610f3a4e33f7eeb9042e.mp4)
+[![Image from Gyazo](https://i.gyazo.com/e9a80c4f501d88a06dd115912026376c.gif)](https://gyazo.com/e9a80c4f501d88a06dd115912026376c)
 
 # Asennusohje
 
