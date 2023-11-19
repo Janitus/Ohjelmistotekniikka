@@ -64,7 +64,7 @@ class Player(Character):
         self.shoot_projectile()
 
         return True
-    
+
     def shoot_projectile(self):
         """Spwans the projectile"""
         projectile = ProjectileManager.create_projectile(
