@@ -37,8 +37,6 @@ Changelog: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/d
 
 Peliohjeet: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/play_instructions.md
 
-Sekvenssidiagrammi: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/sequencediagram.png
-
 Testausdokumentaatio: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/testaus_dokumentaatio.md
 
 Arkkitehtuurikuvaus: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/arkkitehtuurikuvaus.md
