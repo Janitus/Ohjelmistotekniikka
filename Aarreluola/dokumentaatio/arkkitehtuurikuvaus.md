@@ -32,9 +32,13 @@ Jos rehellisesti vastataan, niin koko kapistus pitäisi uudelleennimetä franken
 Ohjelman kulkua/koodia myös erityisesti ei ole kovin helppoa seurata, miten missäkin järjestyksessä asiat toimii. Tähän mm. vaikuttaa suhteellisen suuret ja monimutkaiset funktiot.
     Esimerkkinä vihollisia päivittäessä, tarkastamme myös samalla että ovatko vihollinen ja pelaaja kosketuksissa jonka jälkeen vihollinen lyö pelaajaa, ja tästä puolestaan pääsemme characterin puolelle lukemaan damagesta. Tämä taas puolestaan voi merkata pelaajan "kuolleeksi", jolloin seuraavalla päivityksellä loopissa vasta päivitetään pelin tila, ja ladataan kenttä uusiksi / hävitään peli.
 
+Ohjelmassa myös ei todellakaan ole optimaalista rakennetta esim mihin ja mistä tietoa varastoidaan. Tässä meni hieman sekasin esim juurikin tiedostonlukemisen suhteen.
+
 Vaikeuksia myös varmasti tuottaa esim. .tmx tiedostojen luku (sekä se, miten sinne tietoa tallennetaan), sillä esimerkiksi tiledin väriarvoja kun luetaan, ovat ne eri formaatissa kuin mitä yleensä ohjelmat käyttävät (ARGB vs RGBA), jonka vuoksi joudutaan sitten tämä konvertoimaan ennen käyttöä. Toki aina jonkinverran tälläisiä on muutenkin (esim. blenderin ja unityn välillä Y ja Z akselit flippaavat), mutta harvemmin näissä manuaalisesti tarvitsee omassa koodissa ratkoa.
 
 
 # Pieni henkilökohtainen kommentti
 
 Yleisesti olisi myös koodin luettavuutta helpottanut, mikäli olisi tullut enemmän hyödynnettyä erinäisiä design patterneja (esim. jos game_staten passaamisen sijasta olisi luonut singleton patternilla tietovaraston), mutta vajavaisten pythonitaitojen takia tämä olisi näyttäytynyt lisääntyneiden generoitujen koodien määränä. Myös jonkinsortin eventtipohjainen (esim C# tai Javan eventit) olisi voinut helpottaa paljon.
+
+Ehkä myös olisi voinut kurssin kokoon nähden jättää scopecreeppauksen pienemmälle.
