@@ -8,7 +8,7 @@ Ohjelma päivittyy 60 kertaa sekunnissa.
 
 # Diagrammi pelin tärkeämmistä ominaisuuksista alusta loppuun
 
-![Sekvenssi](/sequencediagram.png)
+![Sekvenssi](https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/sequencediagram.png)
 
 
 # Käyttöliittymä
