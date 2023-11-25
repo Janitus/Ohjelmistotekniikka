@@ -9,7 +9,13 @@ enemy_templates = {}
 
 
 class Enemy(Character):
-    """Enemy is a child class of character."""
+    """
+    Enemy is a child class of character
+    Enemy specific attributes are:
+    melee_damage = The damage player receives when colliding
+    melee_knock = The amount of knockup applied to player when hit
+    avoid_falls = Behaviour that dictates whether enemy turns directions before falling
+    """
     def __init__(self, image, attributes={}):
         self.attributes = attributes
         width = attributes.get('width', 16)

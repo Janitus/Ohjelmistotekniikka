@@ -13,5 +13,6 @@
 | 13.11   | 8   | Lisättiin invoke, sekä vaaditut komennot sille. Lisättiin myös kyky luoda vihollisia, sekä dokumentaatio tälle. Lisättiin myös testejä, sekä hieman koodin refaktorointia (pylintin murjaisemana), sekvenssikaavio. |
 | 17.11   | 3   | Lisättiin kyky luoda ostettavia tavaroita, laajennettiin hieman pickuppien variaatiota ja luotiin renderöitävä teksti hinnoille. Ostomekanismit toimivat. Lisättiin testejä. Peli on aikalailla nyt valmis, enään tarvitsee testejä viedä kotiin. |
 | 18.11   | 8   | Refaktoroitiin koodista paljon pylint ongelmia pois. Lisättiin myös disablet no-member erroreille, sillä ne ottivat jatkuvasti pygamen asioihin kiinni ilman että niille voi tehdä mitään. Kirjoiteltiin testejä lisää. Coverage 70% myös nyt. Projekti aikalailla valmis |
+| 25.11   | 2   | Hieman loppudokumentteja hioin, sekä annoin pelille nimen. |
 
-Kokonaiset työtunnit (18.11): 85 tuntia
+Kokonaiset työtunnit (18.11): 87 tuntia

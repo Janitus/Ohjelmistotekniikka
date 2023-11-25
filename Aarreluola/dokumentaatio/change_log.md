@@ -29,3 +29,9 @@
 - Lisättiin mahdollisuus luoda omia vihollisia, sekä ohjeet näille
 
 - Lisättiin ominaisuus pickuppeihin vaihtoehtoinen ominaisuus "price". Pelaaja voi nyt ostaa tavaroita, joidenka yllä näkyy hintalappu painamalla left tai right shiftiä.
+
+## Viikko 4
+
+- Pelin ikkuna ei enään sano "Placeholder", vain "Aarreluola"
+
+- Peli ei enään ole nimeltään "todoapp", sekä kansio ei ole enään myöskään "todoapp". Molemmat ovat nyt "Aarreluola".

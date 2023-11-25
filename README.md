@@ -14,13 +14,13 @@ Projekti on suunniteltu pohjaksi kokonaiselle pelille, jota voidaan laajentaa, s
 
 1. git clone https://github.com/Janitus/Ohjelmistotekniikka
 
-2. cd todoapp
+2. cd Aarreluola
 
-3. poetry install - note: jos poetry install ei toimi, poista poetry.lock ja käytä komentoa uudestaan. Riippuvuudet pygame ja pytmx pitäisi asentua nyt! poetry.lock tiedosto löytyy root/todoapp kansiosta, joissain systeemeissä tämä tiedosto on näkymätön joudut mahdollisesti etsimään tiedoston että se näkyy!
+3. poetry install - note: jos poetry install ei toimi, poista poetry.lock ja käytä komentoa uudestaan. Riippuvuudet pygame ja pytmx pitäisi asentua nyt! poetry.lock tiedosto löytyy root/Aarreluola kansiosta, joissain systeemeissä tämä tiedosto on näkymätön joudut mahdollisesti etsimään tiedoston että se näkyy!
 
 # Käyttöohje
 
-1. cd todoapp
+1. cd Aarreluola
 
 2. poetry run invoke start HUOM! Jos haluat kokeilla omaa kampanjaasi, käytä: poetry run invoke start --campaign=kampanjanimi
 
@@ -29,25 +29,29 @@ Projekti on suunniteltu pohjaksi kokonaiselle pelille, jota voidaan laajentaa, s
 
 # Dokumentaatio
 
-Työaikakirjaus: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/tyoaikakirjanpito.md
+Työaikakirjaus: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/tyoaikakirjanpito.md
 
-Vaatimusmäärittelyt: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/vaatimusmaarittely.md
+Vaatimusmäärittelyt: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/vaatimusmaarittely.md
 
-Changelog: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/change_log.md
+Changelog: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/change_log.md
 
-Peliohjeet: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/play_instructions.md
+Peliohjeet: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/play_instructions.md
 
-Sekvenssidiagrammi: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/sequencediagram.png
+Sekvenssidiagrammi: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/sequencediagram.png
+
+Testausdokumentaatio: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/testaus_dokumentaatio.md
+
+Arkkitehtuurikuvaus: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/arkkitehtuurikuvaus.md
 
 # Luontiohjeet
 
-Kentät: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/level_creation_information.md
+Kentät: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/level_creation_information.md
 
-Viholliset: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/enemy_creation_information.md
+Viholliset: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/enemy_creation_information.md
 
-Pickupit: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/pickup_creation_information.md
+Pickupit: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/pickup_creation_information.md
 
-Kampanjat: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/dokumentaatio/campaign_creation_information.md
+Kampanjat: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/campaign_creation_information.md
 
 
 
@@ -55,7 +59,7 @@ Kampanjat: https://github.com/Janitus/Ohjelmistotekniikka/blob/main/todoapp/doku
 
 Kokeiltu yliopiston cubbli linuxilla käyttäen VMWarea. Peli toimii odotetusti. Myös testikomennot toimivat odotetusti.
 
-Testikomennot voi suorittaa /todoapp sisällä:
+Testikomennot voi suorittaa /Aarreluola sisällä:
 
 - poetry run invoke test
 

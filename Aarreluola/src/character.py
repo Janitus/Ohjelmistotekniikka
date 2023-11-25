@@ -6,7 +6,22 @@ from map import get_ladder_by_coordinate
 # pylint: disable=no-member,c-extension-no-member
 
 class Character(pygame.sprite.Sprite):
-    """Character is the parent class used for either enemies or players. Not to be used as is"""
+    """
+    Character is the parent class used for either enemies or players. Not to be used as is.
+    Attributes:
+    spritewidth
+    spriteheight
+    width (Used for collision)
+    height (Used for collision)
+    position
+    speed (Movement speed)
+    gravity
+    jump_power
+    health
+    max_health
+    invulnerability_duration in ms, invulnerability is turned on after receiving >= 1 damage
+    velocity_y (this value is affected by gravity and knockups, and moves the character up and down)
+    """
     def __init__(self, image, width=32, height=32):
         super().__init__()
 
@@ -122,7 +137,7 @@ class Character(pygame.sprite.Sprite):
         return False
 
     def update(self):
-        """Applies gravity, and potentially something else in the future."""
+        """Applies gravity. Can be used to automate other functions in the future too."""
         self.apply_gravity()
 
     def draw(self, surface, camera_pos):

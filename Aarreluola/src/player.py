@@ -7,7 +7,18 @@ from projectile_manager import ProjectileManager
 # Pylint herjaa pygamen jokaisesta ominaisuudesta no-member, joten kytkemme sen pois
 
 class Player(Character):
-    """Player is the sole character the user controls."""
+    """
+    Player is the sole character the user controls.
+    Player specific attributes:
+    money
+    life
+    ammo
+    max_ammo
+    keys (set), stores a number of keys picked in the game and is reset after entering next level
+    shot_cooldown (the time between shots until the next shot can be taken)
+    projectile_damage
+    interactive_mode (used to interact with things on the map, currently only buying items.)
+    """
     def __init__(self,image = pygame.image.load("./assets/sprites/player.png"),
                  width=16, height=24):
         super().__init__(image, width, height)
@@ -76,22 +87,22 @@ class Player(Character):
         projectile.set_color(255, 200, 150)
 
     def receive_key(self, key_name):
-        """Grants the player a key"""
+        """Grants the player a key by key_name"""
         self.keys.add(key_name)
 
     def receive_ammo(self, amount):
-        """Grants the player some ammo"""
+        """Grants the player ammo based on amount"""
         if amount <= 0:
             return
         self.ammo += amount
         self.ammo = min(self.ammo, self.max_ammo)
 
     def receive_life(self, amount):
-        """Grants additional lives"""
+        """Grants additional lives based on amount"""
         self.life += amount
 
     def receive_money(self, amount):
-        """Grants money which currently is nothing more than a score"""
+        """Grants money which can be used to buy items"""
         self.money += amount
 
     def purchase_item(self, price):
@@ -102,7 +113,7 @@ class Player(Character):
         return True
 
     def respawn(self):
-        """Respawns the player by reducing one life, healing to full and setting death to false"""
+        """Respawns the player by reducing one life, healing to full and setting dead to false"""
         self.velocity_y = 0
         self.life -= 1
         self.health = self.max_health

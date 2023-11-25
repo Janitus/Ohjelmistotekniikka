@@ -17,7 +17,7 @@ from gamestate import GameState
 # Pylint herjaa pygamen jokaisesta ominaisuudesta no-member, joten kytkemme sen pois
 
 pygame.init()
-pygame.display.set_caption("Placeholder Name")
+pygame.display.set_caption("Aarreluola")
 
 # -------------------------------------------
 # --------------- Set Display ---------------
@@ -89,6 +89,7 @@ def handle_enemies(game_state):
             game_state.enemies.remove(enemy)
 
 def handle_next_level_flag(game_state):
+    """Checks if the flag for next level is set true. If true, move to next level or win game"""
     if game_state.flag_next_level:
         game_state.current_level += 1
         if game_state.current_level > len(game_state.level_order)-1:
@@ -106,6 +107,7 @@ def handle_next_level_flag(game_state):
         return False
 
 def handle_player_status(game_state):
+    """Handles character input, as well as checking for death status"""
     if game_state.player.dead:
         if game_state.player.life > 0:
             load_level(game_state, f"You have died! Lives left {game_state.player.life}")
