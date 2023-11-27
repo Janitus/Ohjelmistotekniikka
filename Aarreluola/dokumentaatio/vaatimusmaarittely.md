@@ -67,4 +67,4 @@ Kaikki allaolevat toiminnallisuudet ovat jo toteutettu.
 - Main menu
 - Tilastonäkymä, sekä itse tilastot
 - Projektiileille omat templatet (samanlain kuin vihollisille ja pickupeille luotu, jotta saisi paremmin luotua lisää)
-- Yleisesti enemmän toiminnallisuutta ja sisältöä (Esim. pommit) Osa näistä voitaisiin toteuttaa nykyisillä systeemeillä, esim alue joka iskee pelaajaan.
+- Yleisesti enemmän toiminnallisuutta ja sisältöä (Esim. pommit.) Osa näistä voitaisiin toteuttaa nykyisillä systeemeillä, esim ansa-alue joka iskee pelaajaan.
