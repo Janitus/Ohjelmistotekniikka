@@ -27,10 +27,10 @@ Kaikki allaolevat toiminnallisuudet ovat jo toteutettu.
     - Test
 
 - Tiedostojärjestelmä
-    - Kykenee ottamaan tiledillä luodut tiedot ja muuntamaan sen datan pelille soveltuvaksi
-    - Kykenee lukemaan käyttäjien luomat viholliset
-    - Kykenee lukemaan käyttäjien luomat pickupit
-    - Kykenee pyörittämään käyttäjien luomat kampanjat (jotka sisältävät kentät ja näihin luodut viholliset/pickupit)
+    - Lukee tiledillä luodut tiedot peliin
+    - Lukee käyttäjien luomat viholliset
+    - Lukee käyttäjien luomat pickupit
+    - Lukee käyttäjien luomat kentät (Sekä kampanjat)
 
 - Pelilogiikka
     - Kameran liikkuvuus
@@ -60,14 +60,11 @@ Kaikki allaolevat toiminnallisuudet ovat jo toteutettu.
 
 # Parannusideoita
 
-- Viholliset, jotka kykenevät itse ampumaan projektiileja
-- Äänet sekä näille systeemi, miten luoda lisää nopeasti jatkossa assets/sounds/in sisälle
+- Viholliset, joilta löytyvät kyky ampua itse projektiileja
+- Äänet sekä näille systeemi, miten luoda lisää nopeasti jatkossa assets/sounds/ sisälle
 - Animaatiot
 - Paremmat collisionit
-- Muitakin toiminnallisuuksia, kuten pommit ym
-- Enemmän zoneja/actioneja (esim. spawn action)
 - Main menu
 - Tilastonäkymä, sekä itse tilastot
-- Sotkuiset importit (Mutta näitä nyt ei oikeasti kukaan enään tästä frankensteinista ole korjaamassa)
 - Projektiileille omat templatet (samanlain kuin vihollisille ja pickupeille luotu, jotta saisi paremmin luotua lisää)
-- Varmaan noin 50% koodista on silkkaa pahuutta, jonka voisi lakaista maton alle. Luudalle tarvetta.
+- Yleisesti enemmän toiminnallisuutta ja sisältöä (Esim. pommit) Osa näistä voitaisiin toteuttaa nykyisillä systeemeillä, esim alue joka iskee pelaajaan.
