@@ -48,10 +48,11 @@ Kaikki allaolevat toiminnallisuudet ovat jo toteutettu.
     - Tavaroiden ostojärjestelmä
 
 - Lisää dokumentaatiota.
-    - Sekvenssikaavio
+    - Arkkitehtuurikuvaus (Sekä yksi sekvenssikaavio tälle)
+    - Testausdokumentaatio
     - Työaikakirjaus
     - Peliohjeet
-    - Ohjeistus kenttien ja kampanjoiden luomiselle ym. Mahdollisia video tai kuva-ohjeita tulossa mikäli tarvitaan
+    - Ohjeistus sisällön luomiselle (Kampanjat, kentät, viholliset ja pickupit)
 
 - Testit
     - Pylint (Ongelmia toki löytyy vielä)
