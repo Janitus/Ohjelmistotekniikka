@@ -1,67 +1,63 @@
-Kuvaus projektista:
+# Projektin kuvaus
 
 Peli on "Indiana Jones" tyylinen seikkailuplatformeri, vähän kuin rick dangerous klassikkopeli.
 
 Pelaajan tavoite on käydä erinäisiä kenttiä läpi, joissa päätavoitteena on löytää eräänlaisen aarteen luokse, jonka jälkeen kenttä loppuu.
 
-Kentän loputtua, pelaaja siirtyy kauppavaiheeseen jossa voidaan ostaa lisätarvikkeita ennen seuraavaa kenttää. Tätä varten tarvitaan rahaa, ja rahaa saa kenttiä suorittamalla, sekä sivuaarteita keräämällä.
+Kentän loputtua, pelaaja siirtyy kauppavaiheeseen jossa voidaan ostaa lisätarvikkeita ennen seuraavaa kenttää. Tätä varten tarvitaan rahaa, ja rahaa saa aarteita keräämällä.
 
-Kenttiä tulee X lukumäärä, päätavoitetta en vielä tiedä.
+Pelin voittaa suorittamalla kaikki kampanjaan (Lista kenttiä) kuuluvat kentät.
 
-Tavaroihin liittyen, pelaaja aloittaa pelin käsiaseella, sekä vähillä määrillä luoteja. Pelaaja kykenee parantamaan asemaansa esimerkiksi ostamalla/löytämällä:
+# Laajennettavuus
 
-- Lisää elämiä
-- Lisää luoteja
-- Parempia aseita, joissa ovat omat statsinsa.
-- Suojia
-- Mahdollisesti jotain muutakin.
+Projekti toteutetaan siten, että sitä olisi mahdollisimman helppo laajentaa.
 
-Kenttien haasteet tulevat muodoissa:
+Tiedostot vihollisiin, pickuppeihin, sekä kenttiin ovat muokattavissa ilman ohjelmointitaitoja, ja näille löytyy ohjeet kuinka toteuttaa, sekä käyttäjän kannalta voi myös tarkastella itse tiedostoja ottaakseen mallia.
 
-- Viholliset
-- Ansat
+Viholliset ja pickupit onnistuvat puhtaasti teksti ja kuvatiedostoilla, kenttien luonti kuitenkin tarvitsee "Tiled" Editorin, sillä tiedostot ovat .tmx formaattia.
 
-Kenttien luonti tapahtuu "Tiled" Editoria käyttäen, joissa luodaan tiedot kentälle, jotka sitten ladataan itse peliin. Kentillä muodostetaan suurempia kampanjoita, joita voi myös käyttäjä luoda.
+# Vaaditusmäärittely
 
+Kaikki allaolevat toiminnallisuudet ovat jo toteutettu.
 
-TODO lista:
+- Invoketoiminnot (Poetry run invoke [Komento])
+    - Start (Sekä lisäargumentti jolla vaihtaa kampanja)
+    - Lint
+    - Coverage-Report
+    - Test
 
-- Invoketoiminnot
-    - DONE: Start (Sekä lisäargumentti jolla vaihtaa kampanja)
-    - DONE: Lint
-    - DONE: Coverage
-    - DONE: Test
 - Tiedostojärjestelmä
-    - DONE: Kykenee ottamaan tiledillä luodut tiedot ja muuntamaan sen datan pelille soveltuvaksi
-    - DONE: Kykenee lukemaan käyttäjien luomat viholliset
-    - DONE: Kykenee lukemaan käyttäjien luomat pickupit
-    - DONE: Kykenee pyörittämään käyttäjien luomat kampanjat (jotka sisältävät kentät ja näihin luodut viholliset/pickupit)
+    - Kykenee ottamaan tiledillä luodut tiedot ja muuntamaan sen datan pelille soveltuvaksi
+    - Kykenee lukemaan käyttäjien luomat viholliset
+    - Kykenee lukemaan käyttäjien luomat pickupit
+    - Kykenee pyörittämään käyttäjien luomat kampanjat (jotka sisältävät kentät ja näihin luodut viholliset/pickupit)
+
 - Pelilogiikka
-    - DONE: Kameran liikkuvuus
-    - DONE: Hahmojen liikkuminen (Kävely, kiipeily, hyppiminen, painovoima)
-    - DONE: Pelaajien toiminnot (Ampuminen, ym)
-    - DONE: Vihollisten tekoäly (Vihollisella perus tekoäly, osaa kävellä, vältellä putouksia ja kääntää suuntaa)
-    - DONE: Tapahtumat (Esim. jos pelaaja menee alueelle, avataan vaikka ovi)
-    - DONE: Kenttien välinen tila, missä ladataan uudet kentät
-    - DONE: Hyppiminen
-    - DONE: Collisionit
-    - DONE: Tikkaat
-    - DONE: Valot
-    - DONE: Projektiilit
-    - DONE: Damage & Heal systeemi
-    - DONE: Tavaroiden ostojärjestelmä
+    - Kameran liikkuvuus
+    - Hahmojen liikkuminen (Kävely, kiipeily, hyppiminen, painovoima)
+    - Pelaajien toiminnot (Ampuminen, ym)
+    - Vihollisten tekoäly (Vihollisella perus tekoäly, osaa kävellä, vältellä putouksia ja kääntää suuntaa)
+    - Tapahtumat (Esim. jos pelaaja menee alueelle, avataan vaikka ovi)
+    - Kenttien välinen tila, missä ladataan uudet kentät
+    - Hyppiminen
+    - Collisionit
+    - Tikkaat
+    - Valot
+    - Projektiilit
+    - Damage & Heal systeemi
+    - Tavaroiden ostojärjestelmä
+
 - Lisää dokumentaatiota.
-    - DONE: Sekvenssikaavio
-    - DONE: Työaikakirjaus
-    - DONE: Peliohjeet
-    - DONE: Ohjeistus kenttien ja kampanjoiden luomiselle ym. Mahdollisia video tai kuva-ohjeita tulossa mikäli tarvitaan
+    - Sekvenssikaavio
+    - Työaikakirjaus
+    - Peliohjeet
+    - Ohjeistus kenttien ja kampanjoiden luomiselle ym. Mahdollisia video tai kuva-ohjeita tulossa mikäli tarvitaan
+
 - Testit
-    - DONE: Pylint (Ongelmia toki löytyy vielä)
-    - DONE: Coverage (70%)
+    - Pylint (Ongelmia toki löytyy vielä)
+    - Coverage (70%)
 
-
-
-Parannusideoita:
+# Parannusideoita
 
 - Viholliset, jotka kykenevät itse ampumaan projektiileja
 - Äänet sekä näille systeemi, miten luoda lisää nopeasti jatkossa assets/sounds/in sisälle
