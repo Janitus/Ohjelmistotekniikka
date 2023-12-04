@@ -3,6 +3,7 @@ import sys
 import os
 import pygame
 from pytmx.util_pygame import load_pygame
+import instance_loader
 from player import Player
 from enemy import load_enemy_types
 from ui.ui import UI
@@ -66,7 +67,7 @@ def handle_zones(game_state):
     """Checks whether player is within a zone."""
     for zone in game_state.zones:
         if zone.can_be_activated(game_state.player):
-            messages = zone.activate()
+            messages = zone.activate(game_state)
             if isinstance(messages, str) and "exit" in messages:
                 game_state.flag_next_level = True
 
@@ -103,8 +104,7 @@ def handle_next_level_flag(game_state):
             print("entering level", game_state.current_level)
         game_state.flag_next_level = False
         return True
-    else:
-        return False
+    return False
 
 def handle_player_status(game_state):
     """Handles character input, as well as checking for death status"""
@@ -169,10 +169,10 @@ def load_level(game_state, message=""):
                                                   game_state)
         map.set_layers(game_state.tmx_level)
         map.create_collision_map(game_state.tmx_level)
-        game_state.pickups = map.load_pickups_from_map(game_state.tmx_level)
-        actions = map.load_actions_from_map(game_state.tmx_level)
-        game_state.zones = map.load_zones_from_map(game_state.tmx_level, actions)
-        game_state.enemies = map.load_enemies_from_map(game_state.tmx_level)
+        game_state.pickups = instance_loader.load_pickups_from_map(game_state.tmx_level)
+        actions = instance_loader.load_actions_from_map(game_state.tmx_level)
+        game_state.zones = instance_loader.load_zones_from_map(game_state.tmx_level, actions)
+        game_state.enemies = instance_loader.load_enemies_from_map(game_state.tmx_level)
         game_state.lighting = Lighting(WINDOW_WIDTH, WINDOW_HEIGHT)
         game_state.lighting.load_lights_from_map(game_state.tmx_level)
         game_state.projectile_manager = ProjectileManager(game_state.player, game_state.enemies)
@@ -186,6 +186,23 @@ def load_level(game_state, message=""):
     except ValueError as e:
         handle_quit(e)
 
+def set_up_game_state():
+    game_state = GameState()
+    game_state.campaign_name = "testCampaign"
+    if len(sys.argv) == 2:
+        game_state.campaign_name = sys.argv[1]
+
+
+
+    game_state.level_order = load_campaign(game_state)
+    game_state.player = Player()
+
+    game_state.renderer = Renderer(game_surface, game_window,
+                        game_resolution, zoomed_resolution)
+    game_state.renderer.zoom_amount = 2
+    game_state.renderer.game_state = game_state
+    game_state.current_level = 0
+    return game_state
 
 def main():
     """Main to run the game on."""
@@ -194,21 +211,9 @@ def main():
     load_pickup_types()
     load_enemy_types()
 
-    game_state = GameState()
-    game_state.campaign_name = "testCampaign"
-    if len(sys.argv) == 2:
-        game_state.campaign_name = sys.argv[1]
-
+    game_state = set_up_game_state()
     camera_pos = [100, 100]
-
-    game_state.level_order = load_campaign(game_state)
-    game_state.player = Player()
     ui = UI(game_state.player)
-    game_state.renderer = Renderer(game_surface, game_window,
-                        game_resolution, zoomed_resolution)
-    game_state.renderer.zoom_amount = 2
-    game_state.renderer.game_state = game_state
-    game_state.current_level = 0
 
     load_level(game_state, "Entering first level")
 

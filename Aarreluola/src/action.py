@@ -37,3 +37,26 @@ class ExitAction(Action):
         if not super().execute():
             return False
         return "exit"
+
+class DamageAction(Action):
+    """Deals damage to the player"""
+    def __init__(self, action_id, damage, knockup):
+        super().__init__(action_id)
+        self.use_limit = float('inf')
+        self.damage = damage
+        self.knockup = knockup
+
+    def execute(self, game_state=None):
+        if game_state is not None and super().execute():
+            game_state.player.damage(self.damage, self.knockup)
+
+class KnockupAction(Action):
+    """Knocks the player up player"""
+    def __init__(self, action_id, knockup):
+        super().__init__(action_id)
+        self.use_limit = float('inf')
+        self.knockup = knockup
+
+    def execute(self, game_state=None):
+        if game_state is not None and super().execute():
+            game_state.player.knock_up(self.knockup)

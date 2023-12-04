@@ -62,28 +62,23 @@ class Pickup:
             if player.purchase_item(self.price) is False:
                 return False
 
-        for attr, value in self.attributes.items():
-            if attr == PickupType.MONEY.value:
-                player.money += value
-            elif attr == PickupType.HEALTH.value:
-                player.heal(value)
-            elif attr == PickupType.MAX_HEALTH.value:
-                player.max_health += value
-            elif attr == PickupType.LIFE.value:
-                player.life += value
-            elif attr == PickupType.AMMO.value:
-                player.receive_ammo(value)
-            elif attr == PickupType.MAX_AMMO.value:
-                player.max_ammo += value
-            elif attr == PickupType.SPEED.value:
-                player.speed += value
-            elif attr == PickupType.DAMAGE.value:
-                player.projectile_damage = value
-            elif attr == PickupType.SHOT_COOLDOWN.value:
-                player.shot_cooldown = value
+        attribute_actions = {
+            PickupType.MONEY.value: lambda p, v: setattr(p, 'money', p.money + v),
+            PickupType.HEALTH.value: lambda p, v: p.heal(v),
+            PickupType.MAX_HEALTH.value: lambda p, v: setattr(p, 'max_health', p.max_health + v),
+            PickupType.LIFE.value: lambda p, v: setattr(p, 'life', p.life + v),
+            PickupType.AMMO.value: lambda p, v: p.receive_ammo(v),
+            PickupType.MAX_AMMO.value: lambda p, v: setattr(p, 'max_ammo', p.max_ammo + v),
+            PickupType.SPEED.value: lambda p, v: setattr(p, 'speed', p.speed + v),
+            PickupType.DAMAGE.value: lambda p, v: setattr(p, 'projectile_damage', v),
+            PickupType.SHOT_COOLDOWN.value: lambda p, v: setattr(p, 'shot_cooldown', v),
+            PickupType.KEY.value: lambda p, v: p.receive_key(v),
+        }
 
-            elif attr == PickupType.KEY.value:
-                player.receive_key(value)
+        for attr, value in self.attributes.items():
+            action = attribute_actions.get(attr)
+            if action:
+                action(player, value)
 
         return True
 

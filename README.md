@@ -63,16 +63,16 @@ Testikomennot voi suorittaa /Aarreluola sisällä:
 
 - poetry run invoke coverage-report
 
-- poetry run invoke lint, Huom koodissa on käytetty disable=no-member,c-extension-no-member, sillä nämä herjaavat jokaisesta pygamen ominaisuuksista no-member erroreita, vaikka koodi toimii muuten.
+- poetry run invoke lint, Huom koodissa on käytetty disable=no-member,c-extension-no-member, sillä nämä herjaavat jokaisesta pygamen ominaisuuksista no-member erroreita, vaikka koodi toimii muuten. Myös player ja characterissa on too-many-instance-attributes, sillä näihin molempiin kuuluu suuri määrä attribuutteja mitä ei voisi vähentää.
 
 # Testitulokset
 
 --- Lint ---
 
-Your code has been rated at 9.71/10 (previous run: 9.71/10, +0.00)
+Your code has been rated at 9.91/10 (previous run: 9.90/10, +0.01
 
 --- Coverage ---
 
 Name                        Stmts   Miss Branch BrPart  Cover
 
-TOTAL                         912    261    328     21    70%
+TOTAL                         863    245    306     24    69%

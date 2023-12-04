@@ -3,7 +3,8 @@ import pygame
 from map import get_collision_by_coordinate
 from map import get_ladder_by_coordinate
 
-# pylint: disable=no-member,c-extension-no-member
+# pylint: disable=no-member,c-extension-no-member, too-many-instance-attributes
+# Disabloimme too-many-instance-attributes, sillä nämä ovat kaikki tarvittavia attribuutteja.
 
 class Character(pygame.sprite.Sprite):
     """
@@ -54,7 +55,7 @@ class Character(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2(-1, 0)
         self.dead = False
 
-    def damage(self, amount):
+    def damage(self, amount, knock_up = 0):
         """Damage reduces health, while also starting an invulnerability period"""
         if amount <= 0:
             return False
@@ -64,6 +65,9 @@ class Character(pygame.sprite.Sprite):
         self.last_hit = pygame.time.get_ticks()
         self.health -= amount
         self.health = max(self.health, 0)
+
+        if knock_up != 0:
+            self.knock_up(knock_up)
 
         if self.health == 0:
             self.die()
@@ -172,7 +176,7 @@ class Character(pygame.sprite.Sprite):
 
         new_x = int(self.position[0] + dx + horizontal)
         new_y = int(self.position[1] + dy + vertical)
-        
+
         if get_collision_by_coordinate(new_y, new_x):
             return True
         return False

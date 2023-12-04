@@ -3,8 +3,9 @@
 import pygame
 from character import Character
 from projectile_manager import ProjectileManager
-# pylint: disable=no-member,c-extension-no-member
-# Pylint herjaa pygamen jokaisesta ominaisuudesta no-member, joten kytkemme sen pois
+# pylint: disable=no-member,c-extension-no-member, too-many-instance-attributes
+# Pylint herjaa pygamen jokaisesta ominaisuudesta no-member, joten kytkemme sen pois.
+# Disabloimme too-many-instance-attributes, sillä nämä ovat kaikki tarvittavia attribuutteja.
 
 class Player(Character):
     """

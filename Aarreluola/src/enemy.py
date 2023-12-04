@@ -16,11 +16,13 @@ class Enemy(Character):
     melee_knock = The amount of knockup applied to player when hit
     avoid_falls = Behaviour that dictates whether enemy turns directions before falling
     """
-    def __init__(self, image, attributes={}):
+    def __init__(self, image, attributes=None):
+        if attributes is None:
+            attributes = {}
         self.attributes = attributes
-        width = attributes.get('width', 16)
-        height = attributes.get('height', 24)
-        super().__init__(image, width, height)
+        super().__init__(image,
+                         attributes.get('width', 16),
+                         attributes.get('height', 24))
 
         self.speed = attributes.get('speed', .5)
         self.melee_damage = attributes.get('melee_damage', 1)
@@ -60,6 +62,18 @@ class Enemy(Character):
 
 def load_enemy_types():
     """Loads all the enemy types from assets/enemies/ directory"""
+    attribute_parsers = {
+        'speed': parse_float,
+        'melee_damage': parse_int,
+        'melee_knock': parse_float,
+        'width': parse_int,
+        'height': parse_int,
+        'health': parse_int,
+        'max_health': parse_int,
+        'gravity': parse_float,
+        'avoid_falls': parse_bool,
+    }
+
     for enemy_name in os.listdir(ENEMY_DIRECTORY):
         enemy_dir = os.path.join(ENEMY_DIRECTORY, enemy_name)
         if os.path.isdir(enemy_dir):
@@ -73,38 +87,26 @@ def load_enemy_types():
                     for line in f:
                         if ':' in line:
                             key, value = line.strip().split(':', 1)
-                            if key == 'speed':
-                                attributes['speed'] = float(value)
-                            elif key == 'melee_damage':
-                                attributes['melee_damage'] = int(value)
-                            elif key == 'melee_knock':
-                                attributes['melee_knock'] = float(value)
-                            elif key == 'width':
-                                attributes['width'] = int(value)
-                            elif key == 'height':
-                                attributes['height'] = int(value)
-                            elif key == 'health':
-                                attributes['health'] = int(value)
-                            elif key == 'max_health':
-                                attributes['max_health'] = int(value)
-                            elif key == 'gravity':
-                                attributes['gravity'] = float(value)
-                            elif key == 'avoid_falls':
-                                attributes['avoid_falls'] = parse_bool(value)
+                            parser = attribute_parsers.get(key)
+                            if parser:
+                                attributes[key] = parser(value)
 
-                # e = Enemy(image,(0,0),attributes)
                 enemy_templates[enemy_name] = Enemy(image, attributes)
     return enemy_templates
 
 
-
-
-
 def parse_bool(value):
     """Helper function to parse booleans from strings."""
-    if value.lower() == 'true':
-        return True
-    return False
+    return value.lower() == 'true'
+
+def parse_int(value):
+    """Helper function to parse integers from strings."""
+    return int(value)
+
+def parse_float(value):
+    """Helper function to parse floats from strings."""
+    return float(value)
+
 
 
 enemy_templates = load_enemy_types()

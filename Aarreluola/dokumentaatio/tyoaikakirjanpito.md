@@ -14,5 +14,6 @@
 | 17.11   | 3   | Lisättiin kyky luoda ostettavia tavaroita, laajennettiin hieman pickuppien variaatiota ja luotiin renderöitävä teksti hinnoille. Ostomekanismit toimivat. Lisättiin testejä. Peli on aikalailla nyt valmis, enään tarvitsee testejä viedä kotiin. |
 | 18.11   | 8   | Refaktoroitiin koodista paljon pylint ongelmia pois. Lisättiin myös disablet no-member erroreille, sillä ne ottivat jatkuvasti pygamen asioihin kiinni ilman että niille voi tehdä mitään. Kirjoiteltiin testejä lisää. Coverage 70% myös nyt. Projekti aikalailla valmis |
 | 25.11   | 2   | Hieman loppudokumentteja hioin, sekä annoin pelille nimen. |
+| 4.12   | 3   | Refaktoroitiin koodia, pylint erroreita nyt paljon vähemmän. Myös loin actioneita, ja yritin etsiä ratkaisua kolikkobugiin (joka toimii vain poetry invokella) |
 
-Kokonaiset työtunnit (18.11): 87 tuntia
+Kokonaiset työtunnit (4.12): 90 tuntia

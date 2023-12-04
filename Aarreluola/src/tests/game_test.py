@@ -2,6 +2,7 @@ import unittest
 import pygame
 import map
 import game
+import instance_loader
 from renderer import Renderer
 from player import Player
 from gamestate import GameState
@@ -21,17 +22,17 @@ class TestGame(unittest.TestCase):
 
     def test_enemies_can_be_loaded (self):
         load_enemy_types()
-        enemies = map.load_enemies_from_map(self.game_state.tmx_level)
+        enemies = instance_loader.load_enemies_from_map(self.game_state.tmx_level)
         self.assertGreater(len(enemies),0)
 
     def test_pickups_can_be_loaded(self):
         load_pickup_types()
-        pickups = map.load_pickups_from_map(self.game_state.tmx_level)
+        pickups = instance_loader.load_pickups_from_map(self.game_state.tmx_level)
         self.assertGreater(len(pickups),0)
 
     def test_actions_and_zones_can_be_loaded(self):
-        actions = map.load_actions_from_map(self.game_state.tmx_level)
-        zones = map.load_zones_from_map(self.game_state.tmx_level,actions)
+        actions = instance_loader.load_actions_from_map(self.game_state.tmx_level)
+        zones = instance_loader.load_zones_from_map(self.game_state.tmx_level,actions)
         self.assertGreater(len(actions),0)
         self.assertGreater(len(zones),0)
 

@@ -1,7 +1,7 @@
 """Zone contains Zone, conditions and all the child types of conditions"""
 class Zone:
     """Zones are used to check for conditions. Default: Player inside."""
-    def __init__(self, rect, additional_conditions, actions=[]):
+    def __init__(self, rect, additional_conditions, actions=None):
         self.rect = rect
         self.conditions = [PlayerTouchingCondition(rect)]
         self.actions = actions
@@ -15,11 +15,11 @@ class Zone:
                 return False
         return True
 
-    def activate(self):
+    def activate(self, game_state):
         """Execute any actions it contains, also receive any potential messages from them."""
         messages = []
         for action in self.actions:
-            messages = action.execute()
+            messages = action.execute(game_state)
         return messages
 
 

@@ -35,3 +35,9 @@
 - Pelin ikkuna ei enään sano "Placeholder", vain "Aarreluola"
 
 - Peli ei enään ole nimeltään "todoapp", sekä kansio ei ole enään myöskään "todoapp". Molemmat ovat nyt "Aarreluola".
+
+## Viikko 5
+
+- Lisättiin action iske pelaajaan
+
+- Lisättiin action knockkaa pelaaja ylös
