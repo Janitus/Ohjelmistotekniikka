@@ -5,9 +5,11 @@ class Action:
         self.action_id = action_id
         self.use_count = 0
         self.use_limit = 1
+        self.state = None
 
-    def execute(self):
+    def execute(self, game_state = None):
         """Execute is a method that is called when some condition(s) are fulfilled"""
+        self.state = game_state
         if self.use_count >= self.use_limit:
             return False
         self.use_count += 1
@@ -21,7 +23,8 @@ class DestroyAction(Action):
         super().__init__(action_id)
         self.position = position
 
-    def execute(self):
+    def execute(self, game_state = None):
+        self.state = game_state
         if not super().execute():
             return False
         # Generated solution to avoid circular import. Might want to refactor the code later.
@@ -33,7 +36,8 @@ class DestroyAction(Action):
 
 class ExitAction(Action):
     """Signals exit so that the game will load the next level"""
-    def execute(self):
+    def execute(self, game_state = None):
+        self.state = game_state
         if not super().execute():
             return False
         return "exit"
