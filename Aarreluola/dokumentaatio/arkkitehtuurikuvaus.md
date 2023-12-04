@@ -10,6 +10,17 @@ Ohjelma päivittyy 60 kertaa sekunnissa.
 
 ![Sekvenssi](https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/sequencediagram.png)
 
+# Diagrammi actionien laukaisusta
+
+![Sekvenssi2](https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/zone-action.png)
+
+Tapahtumien järjestys:
+
+Game loopissa tarkistetaan ovatko zonen conditionit täytettyjä. Esim Zonella voi olla kaksi conditionia: Pelaajan pitää koskettaa zonea ja pelaajalla pitää olla avain 'red'.
+
+Jos zonen conditionit ovat täytetty, palautetaan true.
+
+Tämän jälkeen laukaisemme zonen sisältämät actionit. Actioneille passataan game_state joka sisältää pelin tärkeitä tietoja (esim pelaajan), ja actioni toteuttaa mitä sen halutaan toteuttavan, esimerkiksi luoda vahinkoa pelaajaan tai tuhota palikka ym. Lopulta action voi palauttaa viestin zonen kautta takaisin pelin main looppiin, jossa tarvittaessa voidaan toteuttaa lisää toimintoja (esim 'exit' viestiä käytetään kun halutaan siirtyä seuraavaan kenttään)
 
 # Käyttöliittymä
 
