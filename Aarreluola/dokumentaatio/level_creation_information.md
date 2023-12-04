@@ -80,8 +80,12 @@ Zone - Insert Rectangle (R)
 Actions - Insert point (I)
 
 	Rename the object as "action"
-	Create a string property. The property name dictate the action type. Those names are:
-		destroy - It will destroy a tile from the "Environment" layer when triggered.
+
+	Create a (some type of based on the desired effect) property. The property name dictates the action type. These are:
+		destroy (string) - It will destroy a tile from the "Environment" layer when triggered based on it's own position.
+		damage (int) - Deals damage onto the player based on the value within the property. Can also create an additional int property called "damage_knock" which provides
+			a knockup effect onto the player
+		knockup (int) - Knocks the player up. Unlike damage knock, this is not affected by player's invulnerability and is a standalone knockup.
 		
 # Save information
 	
