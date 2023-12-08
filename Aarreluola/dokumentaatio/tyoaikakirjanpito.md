@@ -17,4 +17,4 @@
 | 4.12   | 3   | Refaktoroitiin koodia, pylint erroreita nyt paljon vähemmän. Myös loin actioneita, ja yritin etsiä ratkaisua kolikkobugiin (joka toimii vain poetry invokella) |
 | 8.12   | 1.5   | Lisättiin pisteytys ja tilastot |
 
-Kokonaiset työtunnit (4.12): 91.5 tuntia
+Kokonaiset työtunnit (8.12): 91.5 tuntia
