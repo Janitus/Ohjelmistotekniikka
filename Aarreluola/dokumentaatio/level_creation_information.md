@@ -90,3 +90,7 @@ Actions - Insert point (I)
 # Save information
 	
 The levels are saved as .tmx. You can name your levels any name.
+
+# Snapshot of what level creation looks like in tiled (Using the level1.tmx as reference, you also have this file when you pull this project)
+
+![Editor image](https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/tiledkuva.png)
