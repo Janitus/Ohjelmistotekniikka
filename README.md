@@ -1,6 +1,6 @@
 # Ohjelmistotekniikka Harjoitustyö
 
-RELEASE: https://github.com/Janitus/Ohjelmistotekniikka/releases/tag/viikko5
+RELEASE: https://github.com/Janitus/Ohjelmistotekniikka/releases/tag/viikko6
 
 # Kuvaus
 
