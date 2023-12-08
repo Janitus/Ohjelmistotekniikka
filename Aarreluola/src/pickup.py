@@ -63,10 +63,10 @@ class Pickup:
                 return False
 
         attribute_actions = {
-            PickupType.MONEY.value: lambda p, v: setattr(p, 'money', p.money + v),
+            PickupType.MONEY.value: lambda p, v: p.receive_money(v),
             PickupType.HEALTH.value: lambda p, v: p.heal(v),
             PickupType.MAX_HEALTH.value: lambda p, v: setattr(p, 'max_health', p.max_health + v),
-            PickupType.LIFE.value: lambda p, v: setattr(p, 'life', p.life + v),
+            PickupType.LIFE.value: lambda p, v: p.receive_life(v),
             PickupType.AMMO.value: lambda p, v: p.receive_ammo(v),
             PickupType.MAX_AMMO.value: lambda p, v: setattr(p, 'max_ammo', p.max_ammo + v),
             PickupType.SPEED.value: lambda p, v: setattr(p, 'speed', p.speed + v),

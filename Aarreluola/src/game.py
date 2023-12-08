@@ -13,6 +13,7 @@ from pickup import load_pickup_types
 import map
 from projectile_manager import ProjectileManager
 from gamestate import GameState
+from game_statistics import GameStatistics
 
 # pylint: disable=no-member,c-extension-no-member
 # Pylint herjaa pygamen jokaisesta ominaisuudesta no-member, joten kytkemme sen pois
@@ -94,10 +95,9 @@ def handle_next_level_flag(game_state):
     if game_state.flag_next_level:
         game_state.current_level += 1
         if game_state.current_level > len(game_state.level_order)-1:
-            print("YOU WIN")
             game_state.renderer.draw_message_screen("You win!", (20, 100, 20))
             pygame.time.delay(2000)
-            handle_quit()
+            handle_quit("YOU WIN", game_state)
         else:
             game_state.player.keys = set()
             load_level(game_state, "Loading next level")
@@ -114,9 +114,9 @@ def handle_player_status(game_state):
             pygame.time.delay(1000)
             game_state.player.respawn()
         else:
-            game_state.renderer.draw_message_screen("You lose!", (50, 20, 20))
+            game_state.renderer.draw_message_screen("Game Over!", (50, 20, 20))
             pygame.time.delay(2000)
-            handle_quit()
+            handle_quit("Game Over!", game_state)
 
     keys = pygame.key.get_pressed()
     game_state.player.control(keys)
@@ -235,13 +235,18 @@ def main():
         running = handle_input()
         game_state.renderer.handle_rendering(ui, camera_pos)
 
-    handle_quit("Exiting game!")
+    handle_quit("Exiting game!", game_state)
 
 
-def handle_quit(message = ""):
+def handle_quit(message = "", game_state = None):
     """Standard quit. Always used, even if errors present."""
     if message != "":
         print(message)
+
+    if game_state:
+        stats = GameStatistics(game_state)
+        stats.write_stats()
+
     pygame.quit()
     sys.exit()
 

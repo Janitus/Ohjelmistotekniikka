@@ -9,3 +9,6 @@ htmlcov
 .pylintrc
 todoapp/assets/campaigns/tiledTemplates/
 todoapp/.vscode
+Aarreluola/assets/campaigns/tiledTemplates/
+Aarreluola/.vscode
+Aarreluola/statistics/

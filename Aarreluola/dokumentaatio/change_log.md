@@ -41,3 +41,11 @@
 - Lisättiin action iske pelaajaan
 
 - Lisättiin action knockkaa pelaaja ylös
+
+## Viikko 6
+
+- Korvattiin hämäävät grafiikat paikoissa missä sillä on pelaajan kannalta merkitystä.
+
+- Lisättiin kyky saada pisteitä. Aina kun pelaaja saa rahaa, tulee myös saman verran pisteitä mukana.
+
+- Lisättiin tilastot, pelin loputtua peli tallentaa Aarreluola/statistics/kampanjanimi.txthen highscoret ja päiväykset näille. Pelaaja voi täten seurata kehittymistään.

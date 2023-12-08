@@ -23,6 +23,7 @@ class Player(Character):
     def __init__(self,image = pygame.image.load("./assets/sprites/player.png"),
                  width=16, height=24):
         super().__init__(image, width, height)
+        self.score = 0
         self.money = 0
         self.life = 3
         self.ammo = 4
@@ -103,8 +104,12 @@ class Player(Character):
         self.life += amount
 
     def receive_money(self, amount):
-        """Grants money which can be used to buy items"""
+        """
+        Grants money which can be used to buy items
+        Also grants score based on amount of money received
+        """
         self.money += amount
+        self.score += amount
 
     def purchase_item(self, price):
         """Checks whether enough money for purchase."""
