@@ -36,6 +36,12 @@ Oleellisimmat tiedostot joita luemme, ovat viholliset, pickupit, kentät ja kamp
 Viholliset ja pickupit luemme ohjelman alkuvaiheessa, jotta voimme pitää kopion jokaisesta olemassaolevasta vihollisesta ilman että näitä tietoja tarvitsee lukea pelin aikana. Täten saamme esimerkiksi kenttien lataamisnopeutta paranneltua, sillä kovalevyltä lukeminenhan on hitainta mitä on, joten jätämme sinne vain .tmx tiedostot. Voimme siten .tmx tiedoston perusteella vain katsoa, että mihin mikäkin vihollinen/pickup kuuluu, ja suoraan instantioida ne valmiiksi ladatusta datastamme. Toisaalta, tällä ei hirveästi painoarvoa ole.
 
 
+# Tiedostojen kirjoitus
+
+Tiedostoja myös kirjoitetaan pelin suljettua. Tiedostot ovat erittäin yksinkertaisia tilastoja, joissa jokaisella kampanjalla on omat tilastonsa, ja jokaisessa tilastossa on riveittäin pelaajan saavuttama pistemäärä sekä tämän päiväys. Täten voidaan luoda yksinkertainen highscore, sekä tarvittaessa laajentaa sarakkeittain muuta mielenkiintoista informaatiota (kuten monenteen kenttään asti päästiin, päätyikö peli voittoon vai häviöön, jne.)
+
+Tilastonkirjoittajalle viedään parametrina mukaan game_state, joka sisältää suurimman osuuden pelin relevanteista tiedoista (kuten juurikin pelaajan, kampanjan statuksen), joten tänne on myös helppo tarvittaessa pakata mukaan muutakin dataa.
+
 # Ohjelman rakenneongelmat
 
 Jos rehellisesti vastataan, niin koko kapistus pitäisi uudelleennimetä frankensteiniksi. Muummoassa circular importteja, global variableja ym. pylintin herjaamia löytyy koodista jonkin verran.
