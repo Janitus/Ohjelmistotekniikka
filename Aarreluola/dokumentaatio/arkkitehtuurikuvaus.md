@@ -38,9 +38,11 @@ Viholliset ja pickupit luemme ohjelman alkuvaiheessa, jotta voimme pitää kopio
 
 # Tiedostojen kirjoitus
 
-Tiedostoja myös kirjoitetaan pelin suljettua. Tiedostot ovat erittäin yksinkertaisia tilastoja, joissa jokaisella kampanjalla on omat tilastonsa, ja jokaisessa tilastossa on riveittäin pelaajan saavuttama pistemäärä sekä tämän päiväys. Täten voidaan luoda yksinkertainen highscore, sekä tarvittaessa laajentaa sarakkeittain muuta mielenkiintoista informaatiota (kuten monenteen kenttään asti päästiin, päätyikö peli voittoon vai häviöön, jne.)
+Tiedostoja myös kirjoitetaan pelin suljettua. Tiedostot ovat erittäin yksinkertaisia tekstitilastoja, joissa jokaisella kampanjalla on omat tilastonsa, ja jokaisessa tilastossa on riveittäin pelaajan saavuttama pistemäärä sekä tämän päiväys. Täten voidaan luoda yksinkertainen highscore, sekä tarvittaessa laajentaa sarakkeittain muuta mielenkiintoista informaatiota (kuten monenteen kenttään asti päästiin, päätyikö peli voittoon vai häviöön, jne.)
 
 Tilastonkirjoittajalle viedään parametrina mukaan game_state, joka sisältää suurimman osuuden pelin relevanteista tiedoista (kuten juurikin pelaajan, kampanjan statuksen), joten tänne on myös helppo tarvittaessa pakata mukaan muutakin dataa.
+
+Mikäli kampanjalla ei ole omaa tilastotiedostoa, luodaan tämä koodin toimesta automaattisesti. Täten käyttäjän tai kehittäjän ei tarvitse huomioida lainkaan, kun uusia kampanjoita luodaan tai ladataan. 
 
 # Ohjelman rakenneongelmat
 
