@@ -58,6 +58,26 @@ class Renderer:
 
         pygame.display.flip()
 
+    def draw_score_screen(self, scores, current_score, color_fill=(20, 20, 20)):
+        """Draws a screen displaying the current score and a list of high scores."""
+        self.game_window.fill(color_fill)
+
+        font = pygame.font.SysFont("Arial", 24)
+        start_y = 80
+
+        current_score_text = f"Your score: {current_score}"
+        score_surface = font.render(current_score_text, True, (255, 255, 255))
+        score_rect = score_surface.get_rect(center=(self.game_resolution[0] / 2, start_y))
+        self.game_window.blit(score_surface, score_rect)
+
+        for index, (_, score) in enumerate(scores):
+            score_text = f"{index + 1}. {score} points"
+            score_surface = font.render(score_text, True, (255, 255, 255))
+            score_rect = score_surface.get_rect(center=(self.game_resolution[0] / 2, start_y + 40 * (index + 1)))
+            self.game_window.blit(score_surface, score_rect)
+
+        pygame.display.flip()
+
     def draw_map(self, camera_pos):
         """Renders the tiled map"""
         for layer in self.game_state.tmx_level.visible_layers:

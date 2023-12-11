@@ -16,6 +16,6 @@
 | 25.11   | 2   | Hieman loppudokumentteja hioin, sekä annoin pelille nimen. |
 | 4.12   | 3   | Refaktoroitiin koodia, pylint erroreita nyt paljon vähemmän. Myös loin actioneita, ja yritin etsiä ratkaisua kolikkobugiin (joka toimii vain poetry invokella) |
 | 8.12   | 1.5   | Lisättiin pisteytys ja tilastot |
-| 11.12   | 0.5   | Lisättiin hieman tekstiä arkkitehtuuriin |
+| 11.12   | 5.5   | Lisättiin hieman tekstiä arkkitehtuuriin, yritettiin myös tilekokoja muuttaa (sekä muita lähestymistapoja) parempien portaiden haussa, mutta nämä ei oikein onnistunut joten scräppiä. Tutkittiin myös tiled editorin antimia (josko voisi esimerkiksi eri kokoisia tilejä käyttää yhdessä kartassa, mutta tämäkään ei ole mahdollista, sillä kartalle voi asettaa vain yhden leveyden/korkeuden) Lisättiin myös grafiikkaa itse tilastoille pelin loppuun. |
 
-Kokonaiset työtunnit (11.12): 92 tuntia
+Kokonaiset työtunnit (11.12): 97 tuntia

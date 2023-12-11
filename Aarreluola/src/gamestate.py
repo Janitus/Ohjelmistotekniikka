@@ -16,4 +16,5 @@ class GameState:
     lighting = None
     renderer = None
 
+    stats = None
     player = None

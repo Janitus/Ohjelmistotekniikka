@@ -25,3 +25,33 @@ class GameStatistics():
                 file.write(score_entry)
         except ReferenceError as e:
             print ("ERROR: ",e)
+
+    def get_top_scores(self, top_amount=5):
+        """
+        Reads the statistics file and returns the top N scores.
+        """
+        try:
+            with open(self.filename, 'r', encoding='utf-8') as file:
+                lines = file.readlines()
+
+            score_entries = []
+            for line in lines:
+                parts = line.strip().split(' - ')
+                if len(parts) == 2:
+                    date_str, score_str = parts
+                    try:
+                        score = int(score_str)
+                        score_entries.append((date_str, score))
+                    except ValueError:
+                        print(f"Invalid score format in line: {line}")
+
+            # Generated
+            score_entries.sort(key=lambda x: x[1], reverse=True)
+            top_scores = score_entries[:top_amount]
+            # End generate
+
+            return top_scores
+
+        except FileNotFoundError:
+            print(f"File not found: {self.filename}")
+            return []

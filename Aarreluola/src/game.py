@@ -202,6 +202,8 @@ def set_up_game_state():
     game_state.renderer.zoom_amount = 2
     game_state.renderer.game_state = game_state
     game_state.current_level = 0
+    game_state.stats = GameStatistics(game_state)
+
     return game_state
 
 def main():
@@ -244,8 +246,11 @@ def handle_quit(message = "", game_state = None):
         print(message)
 
     if game_state:
-        stats = GameStatistics(game_state)
-        stats.write_stats()
+        game_state.stats.write_stats()
+        top_scores = game_state.stats.get_top_scores(10)
+        game_state.renderer.draw_score_screen(top_scores, game_state.player.score)
+        pygame.time.delay(8000)
+
 
     pygame.quit()
     sys.exit()
