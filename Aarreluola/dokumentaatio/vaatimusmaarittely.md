@@ -31,6 +31,7 @@ Kaikki allaolevat toiminnallisuudet ovat jo toteutettu.
     - Lukee käyttäjien luomat viholliset
     - Lukee käyttäjien luomat pickupit
     - Lukee käyttäjien luomat kentät (Sekä kampanjat)
+    - Kirjaa ja lukee käyttäjän pelikerrat kampanjoittain säilyttäen saavutetut pisteet.
 
 - Pelilogiikka
     - Kameran liikkuvuus
@@ -65,6 +66,5 @@ Kaikki allaolevat toiminnallisuudet ovat jo toteutettu.
 - Animaatiot
 - Paremmat collisionit
 - Main menu
-- Tilastonäkymä, sekä itse tilastot
 - Projektiileille omat templatet (samanlain kuin vihollisille ja pickupeille luotu, jotta saisi paremmin luotua lisää)
 - Yleisesti enemmän toiminnallisuutta ja sisältöä (Esim. pommit.) Osa näistä voitaisiin toteuttaa nykyisillä systeemeillä, esim ansa-alue joka iskee pelaajaan.
