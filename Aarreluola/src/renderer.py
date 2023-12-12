@@ -73,7 +73,8 @@ class Renderer:
         for index, (_, score) in enumerate(scores):
             score_text = f"{index + 1}. {score} points"
             score_surface = font.render(score_text, True, (255, 255, 255))
-            score_rect = score_surface.get_rect(center=(self.game_resolution[0] / 2, start_y + 40 * (index + 1)))
+            score_rect = score_surface.get_rect(center=(self.game_resolution[0] / 2,
+                                                        start_y + 40 * (index + 1)))
             self.game_window.blit(score_surface, score_rect)
 
         pygame.display.flip()

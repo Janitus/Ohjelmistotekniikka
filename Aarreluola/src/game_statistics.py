@@ -39,11 +39,9 @@ class GameStatistics():
                 parts = line.strip().split(' - ')
                 if len(parts) == 2:
                     date_str, score_str = parts
-                    try:
-                        score = int(score_str)
-                        score_entries.append((date_str, score))
-                    except ValueError:
-                        print(f"Invalid score format in line: {line}")
+                    score = int(score_str)
+                    score_entries.append((date_str, score))
+
 
             # Generated
             score_entries.sort(key=lambda x: x[1], reverse=True)
