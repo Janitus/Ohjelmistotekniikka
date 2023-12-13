@@ -4,7 +4,7 @@ Testeissä keskityimme pääsääntöisesti pelikentältä löytyviin objekteihi
 
 Testauskattavuus on noin 70% (Tarkemmat tulokset alla.) Ne missä testikattavuus on pienempi olisivat olleet hyvä myös testata poislukien kuitenkin lighting, sekä jollakin asteikolla renderer.
 
-![Coverage](https://github.com/Janitus/Ohjelmistotekniikka/blob/main/Aarreluola/dokumentaatio/coverage.png)
+![Coverage](https://i.gyazo.com/98ecf39d5f9a6ae64fb9324a2cffa33b.png)
 
 
 # Manuaaliset käyttäjätestit
