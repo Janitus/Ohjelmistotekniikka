@@ -17,5 +17,6 @@
 | 4.12   | 3   | Refaktoroitiin koodia, pylint erroreita nyt paljon vähemmän. Myös loin actioneita, ja yritin etsiä ratkaisua kolikkobugiin (joka toimii vain poetry invokella) |
 | 8.12   | 1.5   | Lisättiin pisteytys ja tilastot |
 | 11.12   | 5.5   | Lisättiin hieman tekstiä arkkitehtuuriin, yritettiin myös tilekokoja muuttaa (sekä muita lähestymistapoja) parempien portaiden haussa, mutta nämä ei oikein onnistunut joten scräppiä. Tutkittiin myös tiled editorin antimia (josko voisi esimerkiksi eri kokoisia tilejä käyttää yhdessä kartassa, mutta tämäkään ei ole mahdollista, sillä kartalle voi asettaa vain yhden leveyden/korkeuden) Lisättiin myös grafiikkaa itse tilastoille pelin loppuun. |
+| 14.12   | 2.5   | Korjattiin bugi (Avaimet pysyivät pelaajalla kuoleman yli), lisättiin grafiikkaa lopputilastoihin, luettiin palautetta (ja kommentoitiin takas), sekä lisättiin uusi kartta. Myös pientä refaktorointia. Poistin myös rendererin lintistä ja coveragesta (sillä tätä ei kai sinne pitäisi laittaa?) Huomasin myös palautteen perusteella, että pylint antaa jostain syystä eri tuloksen? Itselläni näyttää Your code has been rated at 9.91/10, mutta palautteessa oli hitusen pienempi. En ole varma mistä kiikastaa. |
 
-Kokonaiset työtunnit (11.12): 97 tuntia
+Kokonaiset työtunnit (14.12): 99.5 tuntia
