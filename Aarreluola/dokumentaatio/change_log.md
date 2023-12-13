@@ -53,3 +53,7 @@
 - Lisättiin tilastoihin kyky palauttaa top N pisteet
 
 - Lisättiin myös pelin loppuun graafisesti näytettävä tilasto, joka myös näyttää nykyisen pelikerran saavutetun pistemäärän.
+
+## Viikko 7
+
+- Lisättiin toinen kenttä joka demonstroi hieman enemmän viikon 5 toiminnallisuuksia (nämä eivät olleet oikein näkyviä.) Muistakaa F9 huijauskomento, jos haluatte nopeasti testaamaan sitä!
