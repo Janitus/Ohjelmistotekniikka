@@ -75,4 +75,4 @@ Your code has been rated at 9.91/10 (previous run: 9.90/10, +0.01
 
 Name                        Stmts   Miss Branch BrPart  Cover
 
-TOTAL                         863    245    306     24    69%
+TOTAL                         881    264    306     24    68%
