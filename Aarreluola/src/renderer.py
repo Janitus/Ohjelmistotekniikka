@@ -62,6 +62,9 @@ class Renderer:
         """Draws a screen displaying the current score and a list of high scores."""
         self.game_window.fill(color_fill)
 
+        if not scores:
+            return
+
         font = pygame.font.SysFont("Arial", 20)
         start_y = 80
 
@@ -85,7 +88,7 @@ class Renderer:
                          text_color=(255, 255, 255)):
         """Draws a graph based on the scores array."""
 
-        if not scores:
+        if not scores or len(scores) < 2:
             return
 
         graph_width = self.game_resolution[0] - 100
@@ -94,6 +97,9 @@ class Renderer:
         graph_y = 400
 
         max_score = max(scores)
+
+        if max_score == 0:
+            max_score = 1
 
         step = graph_width / (len(scores) - 1)
 
