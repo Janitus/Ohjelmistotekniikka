@@ -31,6 +31,32 @@ class GameStatistics():
         Reads the statistics file and returns the top N scores.
         """
         try:
+            score_entries = self._read_score_entries()
+            score_entries.sort(key=lambda x: x[1], reverse=True)
+            return score_entries[:top_amount]
+
+        except FileNotFoundError:
+            print(f"File not found: {self.filename}")
+            return []
+
+    def get_recent_scores(self, recent_amount=5):
+        """
+        Reads the statistics file and returns the most recent N scores.
+        """
+        try:
+            score_entries = self._read_score_entries()
+            recent_scores = [score for _, score in score_entries[-recent_amount:]]
+            return recent_scores
+
+        except FileNotFoundError:
+            print(f"File not found: {self.filename}")
+            return []
+
+    def _read_score_entries(self):
+        """
+        Reads the score entries from the file and returns them as a list of tuples.
+        """
+        try:
             with open(self.filename, 'r', encoding='utf-8') as file:
                 lines = file.readlines()
 
@@ -42,13 +68,7 @@ class GameStatistics():
                     score = int(score_str)
                     score_entries.append((date_str, score))
 
-
-            # Generated
-            score_entries.sort(key=lambda x: x[1], reverse=True)
-            top_scores = score_entries[:top_amount]
-            # End generate
-
-            return top_scores
+            return score_entries
 
         except FileNotFoundError:
             print(f"File not found: {self.filename}")

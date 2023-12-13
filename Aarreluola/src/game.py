@@ -247,8 +247,10 @@ def handle_quit(message = "", game_state = None):
 
     if game_state:
         game_state.stats.write_stats()
-        top_scores = game_state.stats.get_top_scores(10)
+        top_scores = game_state.stats.get_top_scores(8)
+        recent_scores = game_state.stats.get_recent_scores(30)
         game_state.renderer.draw_score_screen(top_scores, game_state.player.score)
+        game_state.renderer.draw_score_graph(recent_scores)
         pygame.time.delay(8000)
 
 

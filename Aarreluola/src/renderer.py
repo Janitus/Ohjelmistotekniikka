@@ -62,7 +62,7 @@ class Renderer:
         """Draws a screen displaying the current score and a list of high scores."""
         self.game_window.fill(color_fill)
 
-        font = pygame.font.SysFont("Arial", 24)
+        font = pygame.font.SysFont("Arial", 20)
         start_y = 80
 
         current_score_text = f"Your score: {current_score}"
@@ -74,8 +74,52 @@ class Renderer:
             score_text = f"{index + 1}. {score} points"
             score_surface = font.render(score_text, True, (255, 255, 255))
             score_rect = score_surface.get_rect(center=(self.game_resolution[0] / 2,
-                                                        start_y + 40 * (index + 1)))
+                                                        start_y + 25 * (index + 1)))
             self.game_window.blit(score_surface, score_rect)
+
+        pygame.display.flip()
+
+    def draw_score_graph(self, scores,
+                         box_color=(255, 255, 255),
+                         color=(255, 0, 0),
+                         text_color=(255, 255, 255)):
+        """Draws a graph based on the scores array."""
+
+        if not scores:
+            return
+
+        graph_width = self.game_resolution[0] - 100
+        graph_height = self.game_resolution[1] - 400
+        graph_x = 50
+        graph_y = 400
+
+        max_score = max(scores)
+
+        step = graph_width / (len(scores) - 1)
+
+        font = pygame.font.SysFont("Arial", 12)
+
+        pygame.draw.rect(self.game_window, box_color,
+                         (graph_x, graph_y, graph_width, graph_height), 2)
+
+        for i in range(len(scores) - 1):
+            y1 = graph_height - (scores[i] / max_score) * graph_height + graph_y
+            y2 = graph_height - (scores[i + 1] / max_score) * graph_height + graph_y
+
+            start_pos = (graph_x + i * step, y1)
+            end_pos = (graph_x + (i + 1) * step, y2)
+
+            pygame.draw.line(self.game_window, color, start_pos, end_pos, 2)
+            pygame.draw.circle(self.game_window, color, (int(start_pos[0]), int(start_pos[1])), 3)
+
+            score_text = font.render(str(scores[i]), True, text_color)
+            self.game_window.blit(score_text,
+                                  (start_pos[0] - score_text.get_width() / 2, start_pos[1] - 20))
+
+        pygame.draw.circle(self.game_window, color, (int(end_pos[0]), int(end_pos[1])), 3)
+        score_text = font.render(str(scores[-1]), True, text_color)
+        self.game_window.blit(score_text,
+                              (end_pos[0] - score_text.get_width() / 2, end_pos[1] - 20))
 
         pygame.display.flip()
 

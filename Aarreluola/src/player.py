@@ -123,4 +123,5 @@ class Player(Character):
         self.velocity_y = 0
         self.life -= 1
         self.health = self.max_health
+        self.keys = set()
         self.dead = False

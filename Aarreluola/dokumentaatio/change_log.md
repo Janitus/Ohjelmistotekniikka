@@ -57,3 +57,7 @@
 ## Viikko 7
 
 - Lisättiin toinen kenttä joka demonstroi hieman enemmän viikon 5 toiminnallisuuksia (nämä eivät olleet oikein näkyviä.) Muistakaa F9 huijauskomento, jos haluatte nopeasti testaamaan sitä!
+
+- Lisättiin grafiikkaa pelin loppuruudun tilastoihin joka näyttää viimeiset suoritukset graafina, sekä jokaisen pisteet
+
+- Korjattiin avainongelma (Pelaajan avaimet pysyivät tallessa kuoleman yli, nyt avaimet katoavat.)
